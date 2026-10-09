@@ -1,0 +1,251 @@
+Order_ID,Date,Product_Category,Region,Customer_Segment,Units_Sold,Unit_Price,Discount,Revenue,Profit
+ORD-2025-10001,2025-01-01,Accessories,North America,Enterprise,19,89.68,0.0,1703.92,378.9
+ORD-2025-10002,2025-01-02,Electronics,North America,Corporate,6,760.7,0.05,4335.99,897.19
+ORD-2025-10003,2025-01-03,Home Appliances,Europe,Corporate,10,337.95,0.05,3210.52,1265.33
+ORD-2025-10004,2025-01-05,Furniture,Europe,Corporate,15,362.86,0.15,4626.46,1440.82
+ORD-2025-10005,2025-01-06,Home Appliances,Europe,Consumer,9,277.68,0.15,2124.25,241.11
+ORD-2025-10006,2025-01-08,Home Appliances,Latin America,Corporate,2,324.28,0.0,648.56,157.17
+ORD-2025-10007,2025-01-09,Office Supplies,Europe,Consumer,16,50.55,0.0,808.8,310.81
+ORD-2025-10008,2025-01-11,Home Appliances,Europe,Corporate,3,316.52,0.1,854.6,227.13
+ORD-2025-10009,2025-01-12,Electronics,Asia Pacific,Corporate,8,616.27,0.0,4930.16,1077.22
+ORD-2025-10010,2025-01-14,Home Appliances,North America,Enterprise,4,351.18,0.1,1264.25,212.48
+ORD-2025-10011,2025-01-15,Furniture,Asia Pacific,Consumer,10,378.65,0.0,3786.5,1357.24
+ORD-2025-10012,2025-01-17,Electronics,Asia Pacific,Enterprise,12,554.16,0.0,6649.92,2181.59
+ORD-2025-10013,2025-01-18,Accessories,Europe,Consumer,13,98.76,0.0,1283.88,465.59
+ORD-2025-10014,2025-01-20,Home Appliances,Latin America,Consumer,15,391.3,0.0,5869.5,2376.77
+ORD-2025-10015,2025-01-21,Office Supplies,North America,Consumer,17,52.13,0.1,797.59,194.34
+ORD-2025-10016,2025-01-22,Electronics,North America,Enterprise,14,805.61,0.2,9022.83,2345.18
+ORD-2025-10017,2025-01-24,Electronics,Asia Pacific,Consumer,11,766.09,0.0,8426.99,3172.83
+ORD-2025-10018,2025-01-25,Electronics,North America,Consumer,2,811.75,0.05,1542.32,406.14
+ORD-2025-10019,2025-01-27,Electronics,Asia Pacific,Corporate,2,753.43,0.0,1506.86,318.73
+ORD-2025-10020,2025-01-28,Furniture,Latin America,Consumer,15,427.51,0.05,6092.02,1525.58
+ORD-2025-10021,2025-01-30,Electronics,Latin America,Consumer,6,612.29,0.0,3673.74,688.72
+ORD-2025-10022,2025-01-31,Office Supplies,Europe,Enterprise,16,48.03,0.0,768.48,175.9
+ORD-2025-10023,2025-02-02,Electronics,North America,Consumer,18,750.37,0.05,12831.33,2393.03
+ORD-2025-10024,2025-02-03,Electronics,Latin America,Corporate,14,672.65,0.0,9417.1,3047.36
+ORD-2025-10025,2025-02-05,Office Supplies,North America,Corporate,16,47.1,0.0,753.6,240.91
+ORD-2025-10026,2025-02-06,Electronics,Asia Pacific,Consumer,13,591.39,0.05,7303.67,2324.83
+ORD-2025-10027,2025-02-08,Home Appliances,Latin America,Corporate,11,360.96,0.15,3374.98,986.05
+ORD-2025-10028,2025-02-09,Electronics,Europe,Consumer,17,579.23,0.05,9354.56,1491.19
+ORD-2025-10029,2025-02-10,Home Appliances,North America,Consumer,8,273.25,0.0,2186.0,665.09
+ORD-2025-10030,2025-02-12,Electronics,Europe,Consumer,7,587.01,0.05,3903.62,1251.0
+ORD-2025-10031,2025-02-13,Furniture,North America,Consumer,17,516.86,0.0,8786.62,3471.53
+ORD-2025-10032,2025-02-15,Office Supplies,Europe,Corporate,9,51.01,0.15,390.23,107.85
+ORD-2025-10033,2025-02-16,Furniture,North America,Enterprise,7,468.02,0.05,3112.33,928.7
+ORD-2025-10034,2025-02-18,Furniture,Europe,Consumer,10,430.69,0.1,3876.21,1055.83
+ORD-2025-10035,2025-02-19,Office Supplies,Europe,Corporate,19,55.82,0.0,1060.58,237.26
+ORD-2025-10036,2025-02-21,Furniture,Asia Pacific,Consumer,18,360.5,0.1,5840.1,1224.99
+ORD-2025-10037,2025-02-22,Home Appliances,Europe,Consumer,19,359.07,0.0,6822.33,1278.21
+ORD-2025-10038,2025-02-24,Electronics,Europe,Enterprise,5,642.44,0.0,3212.2,1339.6
+ORD-2025-10039,2025-02-25,Electronics,Asia Pacific,Corporate,4,560.14,0.0,2240.56,729.27
+ORD-2025-10040,2025-02-27,Office Supplies,Asia Pacific,Corporate,19,48.91,0.15,789.9,122.88
+ORD-2025-10041,2025-02-28,Office Supplies,Europe,Corporate,3,52.22,0.05,148.83,44.57
+ORD-2025-10042,2025-03-01,Office Supplies,Europe,Corporate,5,53.63,0.05,254.74,54.6
+ORD-2025-10043,2025-03-03,Furniture,Europe,Corporate,2,373.0,0.1,671.4,137.58
+ORD-2025-10044,2025-03-04,Home Appliances,Asia Pacific,Consumer,1,371.0,0.0,371.0,153.13
+ORD-2025-10045,2025-03-06,Home Appliances,North America,Consumer,14,314.35,0.05,4180.86,1319.7
+ORD-2025-10046,2025-03-07,Electronics,Europe,Corporate,12,736.26,0.0,8835.12,1945.75
+ORD-2025-10047,2025-03-09,Electronics,Asia Pacific,Corporate,5,755.77,0.1,3400.96,806.46
+ORD-2025-10048,2025-03-10,Furniture,Europe,Corporate,18,522.76,0.0,9409.68,2215.71
+ORD-2025-10049,2025-03-12,Electronics,Europe,Consumer,5,795.31,0.0,3976.55,1199.87
+ORD-2025-10050,2025-03-13,Electronics,North America,Enterprise,11,557.02,0.0,6127.22,2533.87
+ORD-2025-10051,2025-03-15,Office Supplies,North America,Corporate,12,47.83,0.0,573.96,121.59
+ORD-2025-10052,2025-03-16,Electronics,Latin America,Corporate,8,804.68,0.0,6437.44,2197.9
+ORD-2025-10053,2025-03-18,Home Appliances,Asia Pacific,Consumer,2,356.69,0.2,570.7,96.92
+ORD-2025-10054,2025-03-19,Electronics,North America,Enterprise,15,700.86,0.0,10512.9,4241.19
+ORD-2025-10055,2025-03-20,Office Supplies,Asia Pacific,Consumer,16,53.13,0.1,765.07,205.44
+ORD-2025-10056,2025-03-22,Home Appliances,North America,Corporate,9,382.9,0.2,2756.88,718.4
+ORD-2025-10057,2025-03-23,Electronics,North America,Consumer,2,657.58,0.0,1315.16,447.45
+ORD-2025-10058,2025-03-25,Furniture,Asia Pacific,Corporate,19,502.98,0.0,9556.62,2401.09
+ORD-2025-10059,2025-03-26,Office Supplies,North America,Corporate,7,48.39,0.0,338.73,105.56
+ORD-2025-10060,2025-03-28,Office Supplies,Europe,Consumer,6,39.57,0.05,225.55,71.13
+ORD-2025-10061,2025-03-29,Office Supplies,Europe,Consumer,8,47.59,0.05,361.68,58.29
+ORD-2025-10062,2025-03-31,Home Appliances,Europe,Consumer,5,303.5,0.05,1441.62,359.9
+ORD-2025-10063,2025-04-01,Home Appliances,Asia Pacific,Corporate,11,274.33,0.0,3017.63,548.65
+ORD-2025-10064,2025-04-03,Office Supplies,Asia Pacific,Consumer,11,45.09,0.0,495.99,146.32
+ORD-2025-10065,2025-04-04,Electronics,North America,Corporate,14,632.4,0.15,7525.56,1763.98
+ORD-2025-10066,2025-04-06,Home Appliances,Europe,Corporate,17,397.02,0.15,5736.94,1321.76
+ORD-2025-10067,2025-04-07,Electronics,Asia Pacific,Corporate,7,629.27,0.1,3964.4,691.61
+ORD-2025-10068,2025-04-08,Accessories,Europe,Consumer,1,84.95,0.05,80.7,14.68
+ORD-2025-10069,2025-04-10,Electronics,Europe,Corporate,9,758.87,0.05,6488.34,1277.85
+ORD-2025-10070,2025-04-11,Home Appliances,Latin America,Corporate,17,302.32,0.1,4625.5,906.38
+ORD-2025-10071,2025-04-13,Furniture,Europe,Corporate,18,485.8,0.0,8744.4,2463.71
+ORD-2025-10072,2025-04-14,Electronics,North America,Enterprise,1,608.85,0.0,608.85,113.05
+ORD-2025-10073,2025-04-16,Office Supplies,Europe,Corporate,10,42.87,0.05,407.26,68.84
+ORD-2025-10074,2025-04-17,Electronics,North America,Corporate,18,657.62,0.05,11245.3,3679.73
+ORD-2025-10075,2025-04-19,Office Supplies,Latin America,Consumer,19,49.11,0.0,933.09,370.74
+ORD-2025-10076,2025-04-20,Furniture,North America,Corporate,4,389.23,0.0,1556.92,364.94
+ORD-2025-10077,2025-04-22,Home Appliances,North America,Corporate,2,357.71,0.0,715.42,238.69
+ORD-2025-10078,2025-04-23,Electronics,Europe,Corporate,12,636.83,0.0,7641.96,2603.44
+ORD-2025-10079,2025-04-25,Accessories,Asia Pacific,Corporate,2,87.43,0.0,174.86,55.84
+ORD-2025-10080,2025-04-26,Electronics,Latin America,Corporate,15,604.74,0.05,8617.54,1535.67
+ORD-2025-10081,2025-04-27,Home Appliances,Asia Pacific,Consumer,12,397.6,0.05,4532.64,1118.68
+ORD-2025-10082,2025-04-29,Electronics,Latin America,Consumer,8,752.34,0.0,6018.72,2053.43
+ORD-2025-10083,2025-04-30,Electronics,North America,Corporate,1,710.71,0.05,675.17,130.47
+ORD-2025-10084,2025-05-02,Electronics,North America,Consumer,13,646.14,0.0,8399.82,3400.83
+ORD-2025-10085,2025-05-03,Office Supplies,North America,Consumer,4,53.97,0.0,215.88,79.6
+ORD-2025-10086,2025-05-05,Office Supplies,Europe,Consumer,12,55.0,0.0,660.0,248.28
+ORD-2025-10087,2025-05-06,Home Appliances,Asia Pacific,Enterprise,6,290.08,0.0,1740.48,655.28
+ORD-2025-10088,2025-05-08,Home Appliances,North America,Consumer,3,316.3,0.2,759.12,177.51
+ORD-2025-10089,2025-05-09,Furniture,North America,Enterprise,4,458.87,0.0,1835.48,726.08
+ORD-2025-10090,2025-05-11,Furniture,North America,Enterprise,6,381.59,0.0,2289.54,449.58
+ORD-2025-10091,2025-05-12,Electronics,North America,Enterprise,12,803.61,0.05,9161.15,2105.56
+ORD-2025-10092,2025-05-14,Home Appliances,Europe,Consumer,6,272.04,0.0,1632.24,529.85
+ORD-2025-10093,2025-05-15,Home Appliances,Europe,Corporate,2,330.85,0.0,661.7,277.1
+ORD-2025-10094,2025-05-16,Electronics,Asia Pacific,Enterprise,19,596.87,0.0,11340.53,4171.58
+ORD-2025-10095,2025-05-18,Electronics,North America,Corporate,1,684.95,0.2,547.96,150.88
+ORD-2025-10096,2025-05-19,Office Supplies,North America,Corporate,6,45.92,0.0,275.52,108.22
+ORD-2025-10097,2025-05-21,Home Appliances,North America,Consumer,14,294.64,0.0,4124.96,1696.67
+ORD-2025-10098,2025-05-22,Electronics,North America,Consumer,6,620.05,0.1,3348.27,545.45
+ORD-2025-10099,2025-05-24,Home Appliances,North America,Consumer,18,352.55,0.0,6345.9,1240.67
+ORD-2025-10100,2025-05-25,Electronics,Europe,Consumer,11,670.64,0.15,6270.48,806.01
+ORD-2025-10101,2025-05-27,Home Appliances,North America,Consumer,18,332.93,0.0,5992.74,1646.05
+ORD-2025-10102,2025-05-28,Home Appliances,Asia Pacific,Enterprise,9,285.08,0.1,2309.15,822.7
+ORD-2025-10103,2025-05-30,Furniture,North America,Consumer,18,363.46,0.15,5560.94,1199.8
+ORD-2025-10104,2025-05-31,Office Supplies,Asia Pacific,Enterprise,8,42.34,0.15,287.91,61.37
+ORD-2025-10105,2025-06-02,Furniture,North America,Enterprise,5,365.04,0.0,1825.2,655.41
+ORD-2025-10106,2025-06-03,Office Supplies,Asia Pacific,Consumer,17,55.47,0.1,848.69,182.28
+ORD-2025-10107,2025-06-04,Electronics,North America,Corporate,7,756.3,0.0,5294.1,1476.58
+ORD-2025-10108,2025-06-06,Home Appliances,Asia Pacific,Consumer,10,274.68,0.0,2746.8,1132.47
+ORD-2025-10109,2025-06-07,Electronics,Asia Pacific,Corporate,2,726.01,0.0,1452.02,350.37
+ORD-2025-10110,2025-06-09,Electronics,North America,Enterprise,18,636.28,0.0,11453.04,3365.37
+ORD-2025-10111,2025-06-10,Electronics,Europe,Enterprise,16,763.56,0.1,10995.26,1767.41
+ORD-2025-10112,2025-06-12,Home Appliances,Latin America,Consumer,8,327.31,0.05,2487.56,751.51
+ORD-2025-10113,2025-06-13,Accessories,North America,Consumer,19,102.41,0.05,1848.5,413.36
+ORD-2025-10114,2025-06-15,Furniture,Asia Pacific,Enterprise,9,448.39,0.05,3833.73,797.63
+ORD-2025-10115,2025-06-16,Accessories,Asia Pacific,Corporate,12,74.08,0.0,888.96,320.71
+ORD-2025-10116,2025-06-18,Electronics,Europe,Corporate,2,586.75,0.1,1056.15,344.59
+ORD-2025-10117,2025-06-19,Electronics,Europe,Enterprise,13,659.99,0.1,7721.88,2381.6
+ORD-2025-10118,2025-06-21,Office Supplies,North America,Consumer,7,48.64,0.15,289.41,60.52
+ORD-2025-10119,2025-06-22,Electronics,Europe,Enterprise,12,741.38,0.2,7117.25,738.79
+ORD-2025-10120,2025-06-23,Home Appliances,Asia Pacific,Consumer,10,367.02,0.15,3119.67,788.01
+ORD-2025-10121,2025-06-25,Office Supplies,Europe,Corporate,4,38.34,0.1,138.02,19.11
+ORD-2025-10122,2025-06-26,Office Supplies,North America,Enterprise,11,51.86,0.15,484.89,105.65
+ORD-2025-10123,2025-06-28,Home Appliances,North America,Consumer,4,364.43,0.15,1239.06,306.46
+ORD-2025-10124,2025-06-29,Home Appliances,Europe,Corporate,10,351.31,0.0,3513.1,1301.98
+ORD-2025-10125,2025-07-01,Electronics,Europe,Consumer,14,740.59,0.0,10368.26,2427.26
+ORD-2025-10126,2025-07-02,Office Supplies,North America,Consumer,18,49.09,0.0,883.62,227.36
+ORD-2025-10127,2025-07-04,Office Supplies,North America,Corporate,12,52.38,0.1,565.7,180.61
+ORD-2025-10128,2025-07-05,Home Appliances,Europe,Consumer,17,327.55,0.0,5568.35,1297.13
+ORD-2025-10129,2025-07-07,Office Supplies,Asia Pacific,Enterprise,13,41.37,0.05,510.92,140.03
+ORD-2025-10130,2025-07-08,Electronics,Asia Pacific,Enterprise,11,744.9,0.2,6555.12,843.67
+ORD-2025-10131,2025-07-10,Office Supplies,Latin America,Consumer,11,38.69,0.15,361.75,61.69
+ORD-2025-10132,2025-07-11,Home Appliances,North America,Enterprise,10,381.15,0.0,3811.5,1030.86
+ORD-2025-10133,2025-07-12,Home Appliances,Europe,Consumer,5,362.37,0.05,1721.26,287.39
+ORD-2025-10134,2025-07-14,Accessories,Latin America,Corporate,4,98.28,0.0,393.12,128.34
+ORD-2025-10135,2025-07-15,Electronics,Asia Pacific,Corporate,4,555.98,0.0,2223.92,424.11
+ORD-2025-10136,2025-07-17,Electronics,North America,Consumer,14,617.38,0.0,8643.32,3131.09
+ORD-2025-10137,2025-07-18,Home Appliances,Asia Pacific,Consumer,13,381.2,0.0,4955.6,1629.04
+ORD-2025-10138,2025-07-20,Office Supplies,North America,Consumer,7,39.81,0.0,278.67,99.15
+ORD-2025-10139,2025-07-21,Home Appliances,North America,Enterprise,10,377.97,0.1,3401.73,952.02
+ORD-2025-10140,2025-07-23,Home Appliances,Latin America,Consumer,5,344.36,0.05,1635.71,635.12
+ORD-2025-10141,2025-07-24,Office Supplies,North America,Consumer,18,51.21,0.05,875.69,154.4
+ORD-2025-10142,2025-07-26,Office Supplies,Europe,Enterprise,2,45.52,0.05,86.49,29.84
+ORD-2025-10143,2025-07-27,Home Appliances,Europe,Consumer,2,334.04,0.0,668.08,271.89
+ORD-2025-10144,2025-07-29,Furniture,Asia Pacific,Consumer,16,434.31,0.1,6254.06,1249.19
+ORD-2025-10145,2025-07-30,Furniture,North America,Consumer,3,365.73,0.1,987.47,176.09
+ORD-2025-10146,2025-07-31,Electronics,North America,Consumer,14,748.57,0.0,10479.98,2203.95
+ORD-2025-10147,2025-08-02,Office Supplies,North America,Consumer,9,48.33,0.1,391.47,103.31
+ORD-2025-10148,2025-08-03,Office Supplies,North America,Consumer,12,47.95,0.05,546.63,98.56
+ORD-2025-10149,2025-08-05,Office Supplies,Asia Pacific,Consumer,19,46.19,0.0,877.61,197.3
+ORD-2025-10150,2025-08-06,Electronics,Europe,Corporate,5,717.49,0.1,3228.7,726.56
+ORD-2025-10151,2025-08-08,Accessories,Europe,Consumer,6,99.22,0.0,595.32,229.63
+ORD-2025-10152,2025-08-09,Accessories,North America,Enterprise,1,92.59,0.0,92.59,24.75
+ORD-2025-10153,2025-08-11,Office Supplies,Asia Pacific,Consumer,6,55.67,0.15,283.92,37.83
+ORD-2025-10154,2025-08-12,Office Supplies,North America,Enterprise,13,55.96,0.1,654.73,184.84
+ORD-2025-10155,2025-08-14,Electronics,Asia Pacific,Consumer,5,698.04,0.05,3315.69,1086.37
+ORD-2025-10156,2025-08-15,Furniture,North America,Corporate,9,494.6,0.05,4228.83,1376.31
+ORD-2025-10157,2025-08-17,Home Appliances,Europe,Enterprise,12,312.2,0.0,3746.4,1410.97
+ORD-2025-10158,2025-08-18,Furniture,Europe,Consumer,1,397.3,0.0,397.3,104.69
+ORD-2025-10159,2025-08-19,Home Appliances,Asia Pacific,Corporate,16,345.89,0.1,4980.82,1611.23
+ORD-2025-10160,2025-08-21,Furniture,North America,Consumer,16,374.87,0.0,5997.92,1085.12
+ORD-2025-10161,2025-08-22,Office Supplies,North America,Corporate,1,53.32,0.0,53.32,17.82
+ORD-2025-10162,2025-08-24,Office Supplies,Europe,Consumer,3,51.99,0.05,148.17,49.97
+ORD-2025-10163,2025-08-25,Accessories,North America,Enterprise,13,102.81,0.1,1202.88,408.76
+ORD-2025-10164,2025-08-27,Electronics,North America,Consumer,14,672.19,0.15,7999.06,1889.34
+ORD-2025-10165,2025-08-28,Home Appliances,Latin America,Consumer,17,277.38,0.1,4243.91,1486.8
+ORD-2025-10166,2025-08-30,Electronics,Asia Pacific,Consumer,19,767.27,0.1,13120.32,4349.0
+ORD-2025-10167,2025-08-31,Accessories,Europe,Corporate,19,101.92,0.0,1936.48,675.61
+ORD-2025-10168,2025-09-02,Home Appliances,North America,Consumer,1,332.0,0.0,332.0,107.44
+ORD-2025-10169,2025-09-03,Electronics,North America,Corporate,4,569.27,0.15,1935.52,610.74
+ORD-2025-10170,2025-09-05,Home Appliances,North America,Enterprise,16,302.66,0.1,4358.3,602.84
+ORD-2025-10171,2025-09-06,Office Supplies,Latin America,Enterprise,5,42.79,0.0,213.95,63.59
+ORD-2025-10172,2025-09-07,Office Supplies,Europe,Consumer,3,53.18,0.15,135.61,32.85
+ORD-2025-10173,2025-09-09,Home Appliances,Europe,Consumer,12,331.45,0.0,3977.4,1041.27
+ORD-2025-10174,2025-09-10,Electronics,North America,Enterprise,6,706.34,0.1,3814.24,713.2
+ORD-2025-10175,2025-09-12,Home Appliances,North America,Consumer,13,396.26,0.0,5151.38,1263.0
+ORD-2025-10176,2025-09-13,Home Appliances,Latin America,Consumer,6,281.08,0.0,1686.48,450.03
+ORD-2025-10177,2025-09-15,Home Appliances,North America,Consumer,10,396.36,0.0,3963.6,1172.0
+ORD-2025-10178,2025-09-16,Electronics,Europe,Consumer,17,686.81,0.0,11675.77,2123.11
+ORD-2025-10179,2025-09-18,Electronics,North America,Consumer,7,761.17,0.05,5061.78,1407.38
+ORD-2025-10180,2025-09-19,Electronics,Latin America,Consumer,5,626.49,0.15,2662.58,619.27
+ORD-2025-10181,2025-09-21,Furniture,Europe,Consumer,11,364.54,0.05,3809.44,1440.21
+ORD-2025-10182,2025-09-22,Electronics,Europe,Corporate,8,788.48,0.1,5677.06,1566.29
+ORD-2025-10183,2025-09-24,Home Appliances,Asia Pacific,Enterprise,5,272.2,0.05,1292.95,216.27
+ORD-2025-10184,2025-09-25,Electronics,North America,Corporate,18,619.24,0.1,10031.69,3231.06
+ORD-2025-10185,2025-09-26,Office Supplies,North America,Corporate,8,51.77,0.0,414.16,82.52
+ORD-2025-10186,2025-09-28,Home Appliances,Latin America,Corporate,9,354.75,0.15,2713.84,674.89
+ORD-2025-10187,2025-09-29,Home Appliances,North America,Consumer,7,383.83,0.1,2418.13,384.32
+ORD-2025-10188,2025-10-01,Accessories,North America,Corporate,8,100.13,0.1,720.94,185.86
+ORD-2025-10189,2025-10-02,Home Appliances,North America,Consumer,5,287.74,0.05,1366.76,324.41
+ORD-2025-10190,2025-10-04,Office Supplies,Asia Pacific,Enterprise,11,45.99,0.1,455.3,89.28
+ORD-2025-10191,2025-10-05,Home Appliances,Asia Pacific,Consumer,2,321.18,0.05,610.24,179.43
+ORD-2025-10192,2025-10-07,Furniture,North America,Enterprise,4,423.02,0.05,1607.48,446.56
+ORD-2025-10193,2025-10-08,Electronics,Europe,Consumer,1,642.43,0.0,642.43,119.56
+ORD-2025-10194,2025-10-10,Office Supplies,Europe,Consumer,11,43.85,0.1,434.12,119.55
+ORD-2025-10195,2025-10-11,Home Appliances,North America,Enterprise,1,285.47,0.0,285.47,117.98
+ORD-2025-10196,2025-10-13,Electronics,Latin America,Corporate,13,652.39,0.0,8481.07,1589.6
+ORD-2025-10197,2025-10-14,Home Appliances,North America,Consumer,15,334.44,0.0,5016.6,1908.89
+ORD-2025-10198,2025-10-15,Home Appliances,Europe,Consumer,6,349.18,0.15,1780.82,607.55
+ORD-2025-10199,2025-10-17,Electronics,Latin America,Consumer,13,804.89,0.1,9417.21,3439.41
+ORD-2025-10200,2025-10-18,Home Appliances,Europe,Consumer,19,317.59,0.15,5129.08,1411.33
+ORD-2025-10201,2025-10-20,Electronics,Europe,Corporate,12,768.48,0.05,8760.67,1705.34
+ORD-2025-10202,2025-10-21,Office Supplies,Latin America,Consumer,2,47.05,0.05,89.4,35.18
+ORD-2025-10203,2025-10-23,Furniture,Europe,Corporate,19,390.82,0.0,7425.58,1406.93
+ORD-2025-10204,2025-10-24,Home Appliances,Europe,Consumer,2,364.43,0.05,692.42,251.9
+ORD-2025-10205,2025-10-26,Electronics,Asia Pacific,Consumer,17,729.5,0.05,11781.42,1923.56
+ORD-2025-10206,2025-10-27,Accessories,Latin America,Corporate,12,88.69,0.15,904.64,222.81
+ORD-2025-10207,2025-10-29,Home Appliances,North America,Consumer,15,349.54,0.15,4456.64,855.43
+ORD-2025-10208,2025-10-30,Office Supplies,Asia Pacific,Consumer,19,49.09,0.05,886.07,308.87
+ORD-2025-10209,2025-11-01,Home Appliances,Latin America,Consumer,13,328.21,0.15,3626.72,1158.16
+ORD-2025-10210,2025-11-02,Electronics,Asia Pacific,Consumer,13,805.1,0.0,10466.3,3727.75
+ORD-2025-10211,2025-11-03,Furniture,Latin America,Consumer,3,473.35,0.0,1420.05,357.65
+ORD-2025-10212,2025-11-05,Home Appliances,Asia Pacific,Consumer,15,398.79,0.0,5981.85,2504.69
+ORD-2025-10213,2025-11-06,Electronics,North America,Consumer,4,769.38,0.1,2769.77,455.03
+ORD-2025-10214,2025-11-08,Furniture,Asia Pacific,Corporate,1,499.11,0.05,474.15,83.58
+ORD-2025-10215,2025-11-09,Home Appliances,North America,Consumer,6,311.19,0.05,1773.78,544.02
+ORD-2025-10216,2025-11-11,Office Supplies,Asia Pacific,Consumer,19,47.66,0.0,905.54,179.7
+ORD-2025-10217,2025-11-12,Home Appliances,Asia Pacific,Corporate,2,281.33,0.05,534.53,120.73
+ORD-2025-10218,2025-11-14,Electronics,North America,Enterprise,14,592.11,0.0,8289.54,1535.94
+ORD-2025-10219,2025-11-15,Office Supplies,Asia Pacific,Corporate,13,49.11,0.0,638.43,214.18
+ORD-2025-10220,2025-11-17,Electronics,Asia Pacific,Corporate,10,704.82,0.05,6695.79,1153.19
+ORD-2025-10221,2025-11-18,Office Supplies,North America,Corporate,15,48.2,0.05,686.85,130.01
+ORD-2025-10222,2025-11-20,Furniture,North America,Consumer,14,505.17,0.15,6011.52,1672.48
+ORD-2025-10223,2025-11-21,Electronics,Europe,Consumer,17,685.39,0.0,11651.63,2869.57
+ORD-2025-10224,2025-11-22,Office Supplies,North America,Enterprise,9,44.38,0.2,319.54,31.91
+ORD-2025-10225,2025-11-24,Accessories,Asia Pacific,Consumer,9,100.9,0.0,908.1,335.4
+ORD-2025-10226,2025-11-25,Furniture,Europe,Enterprise,16,514.3,0.1,7405.92,1168.99
+ORD-2025-10227,2025-11-27,Electronics,Europe,Enterprise,10,588.67,0.0,5886.7,2296.54
+ORD-2025-10228,2025-11-28,Electronics,North America,Consumer,4,735.16,0.0,2940.64,603.68
+ORD-2025-10229,2025-11-30,Furniture,Europe,Consumer,5,440.76,0.0,2203.8,854.63
+ORD-2025-10230,2025-12-01,Home Appliances,North America,Corporate,3,319.34,0.0,958.02,348.93
+ORD-2025-10231,2025-12-03,Home Appliances,Asia Pacific,Enterprise,16,319.51,0.15,4345.34,1218.08
+ORD-2025-10232,2025-12-04,Office Supplies,Asia Pacific,Corporate,13,43.57,0.0,566.41,190.54
+ORD-2025-10233,2025-12-06,Office Supplies,North America,Corporate,8,46.68,0.05,354.77,62.26
+ORD-2025-10234,2025-12-07,Electronics,Asia Pacific,Enterprise,10,693.89,0.0,6938.9,2394.83
+ORD-2025-10235,2025-12-09,Electronics,Latin America,Enterprise,17,584.84,0.05,9445.17,2581.25
+ORD-2025-10236,2025-12-10,Home Appliances,Europe,Corporate,11,384.34,0.0,4227.74,1164.47
+ORD-2025-10237,2025-12-11,Furniture,Europe,Consumer,17,444.58,0.2,6046.29,665.89
+ORD-2025-10238,2025-12-13,Electronics,Asia Pacific,Enterprise,2,599.75,0.05,1139.52,267.45
+ORD-2025-10239,2025-12-14,Home Appliances,Asia Pacific,Consumer,12,272.17,0.0,3266.04,1094.61
+ORD-2025-10240,2025-12-16,Accessories,Asia Pacific,Consumer,11,100.46,0.05,1049.81,236.08
+ORD-2025-10241,2025-12-17,Electronics,North America,Enterprise,9,796.22,0.05,6807.68,1828.65
+ORD-2025-10242,2025-12-19,Electronics,Asia Pacific,Corporate,8,797.61,0.1,5742.79,2112.88
+ORD-2025-10243,2025-12-20,Home Appliances,Latin America,Consumer,9,298.24,0.1,2415.74,673.35
+ORD-2025-10244,2025-12-22,Furniture,Asia Pacific,Consumer,19,381.69,0.15,6164.29,1588.1
+ORD-2025-10245,2025-12-23,Home Appliances,Asia Pacific,Consumer,17,393.27,0.0,6685.59,2366.67
+ORD-2025-10246,2025-12-25,Home Appliances,North America,Corporate,17,391.12,0.05,6316.59,1328.13
+ORD-2025-10247,2025-12-26,Electronics,Europe,Consumer,2,615.39,0.05,1169.24,371.95
+ORD-2025-10248,2025-12-28,Electronics,North America,Enterprise,18,694.68,0.0,12504.24,3627.02
+ORD-2025-10249,2025-12-29,Office Supplies,Asia Pacific,Consumer,13,39.15,0.15,432.61,147.3
+ORD-2025-10250,2025-12-31,Furniture,Asia Pacific,Consumer,6,375.29,0.05,2139.15,587.36

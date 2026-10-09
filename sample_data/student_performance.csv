@@ -1,0 +1,121 @@
+Student_ID,Department,Attendance,Study_Hours,Assignment_Score,Internal_Marks,Final_Marks
+STU1001,Data Science,66.2,16.8,74.0,35.8,72.7
+STU1002,Computer Science,65.8,12.7,61.3,28.6,65.7
+STU1003,Data Science,55.4,12.8,59.8,35.0,61.9
+STU1004,Computer Science,66.2,15.0,66.1,31.8,74.9
+STU1005,Computer Science,69.8,16.5,73.2,34.1,78.1
+STU1006,Data Science,63.4,17.2,69.5,34.5,71.3
+STU1007,Data Science,79.2,16.1,73.1,34.3,78.0
+STU1008,Electronics,72.2,19.5,81.3,39.0,81.2
+STU1009,Electronics,67.1,16.1,67.8,36.3,68.8
+STU1010,Information Tech,80.3,19.8,80.3,40.9,89.6
+STU1011,Electronics,99.0,22.0,97.2,45.8,100.0
+STU1012,Data Science,75.0,21.0,79.4,38.1,82.7
+STU1013,Mechanical,86.8,20.9,89.7,47.6,92.4
+STU1014,Mechanical,66.3,15.5,62.2,31.7,69.4
+STU1015,Computer Science,51.6,12.5,53.6,27.7,56.3
+STU1016,Data Science,94.2,22.4,94.8,43.6,98.0
+STU1017,Data Science,73.4,16.4,73.7,37.8,75.4
+STU1018,Computer Science,67.7,18.8,76.8,40.0,75.4
+STU1019,Data Science,96.8,20.6,94.3,46.2,99.4
+STU1020,Computer Science,72.9,14.5,70.8,33.3,74.1
+STU1021,Information Tech,80.0,18.2,76.8,37.7,83.4
+STU1022,Information Tech,85.0,16.8,81.9,41.5,85.9
+STU1023,Data Science,82.3,20.7,90.3,45.6,92.8
+STU1024,Computer Science,73.5,21.4,83.1,39.2,87.5
+STU1025,Information Tech,61.0,16.7,71.7,36.7,74.3
+STU1026,Information Tech,68.1,14.8,64.8,32.2,70.3
+STU1027,Mechanical,89.8,26.4,98.9,46.6,100.0
+STU1028,Information Tech,67.6,16.1,72.6,37.2,73.2
+STU1029,Mechanical,75.3,20.2,79.1,37.7,81.7
+STU1030,Information Tech,79.0,17.0,78.5,39.4,77.1
+STU1031,Electronics,89.8,19.0,92.9,48.3,89.9
+STU1032,Electronics,99.0,23.9,100.0,50.0,100.0
+STU1033,Mechanical,54.9,14.3,56.0,27.9,59.4
+STU1034,Information Tech,71.9,16.4,77.1,38.7,73.6
+STU1035,Electronics,72.7,22.3,89.4,47.4,91.0
+STU1036,Mechanical,56.7,13.0,61.9,29.4,61.8
+STU1037,Computer Science,77.6,17.9,77.1,39.2,75.8
+STU1038,Information Tech,68.4,20.9,81.5,37.7,81.1
+STU1039,Data Science,84.0,19.8,81.4,38.1,86.3
+STU1040,Data Science,82.1,18.5,82.5,44.1,80.5
+STU1041,Data Science,84.3,19.5,85.1,43.8,88.1
+STU1042,Information Tech,82.8,23.8,82.6,41.0,93.2
+STU1043,Mechanical,71.6,19.1,74.8,36.2,78.1
+STU1044,Information Tech,85.5,21.7,91.4,44.0,91.3
+STU1045,Electronics,50.5,11.8,57.6,31.9,55.7
+STU1046,Electronics,87.7,21.9,89.2,45.2,92.8
+STU1047,Mechanical,99.0,19.2,91.4,48.1,91.1
+STU1048,Electronics,84.8,19.9,82.1,41.2,85.3
+STU1049,Data Science,76.9,19.6,86.0,42.1,86.1
+STU1050,Electronics,71.9,14.5,64.3,30.7,69.4
+STU1051,Electronics,64.9,15.4,67.0,32.1,69.5
+STU1052,Computer Science,73.1,18.7,83.0,41.3,83.3
+STU1053,Data Science,74.5,18.0,80.6,41.2,81.0
+STU1054,Data Science,94.7,26.2,98.1,50.0,100.0
+STU1055,Computer Science,79.8,16.1,80.2,39.8,76.3
+STU1056,Data Science,68.6,17.4,79.8,41.8,76.1
+STU1057,Information Tech,91.0,22.6,93.0,46.4,95.7
+STU1058,Electronics,66.7,16.1,74.1,33.9,71.8
+STU1059,Computer Science,79.3,21.9,86.7,42.7,84.6
+STU1060,Computer Science,79.2,20.3,78.5,36.2,88.4
+STU1061,Computer Science,89.6,21.1,96.6,48.6,98.9
+STU1062,Information Tech,78.4,20.0,87.5,41.8,89.1
+STU1063,Computer Science,67.0,18.2,72.0,36.4,69.0
+STU1064,Electronics,82.4,16.1,78.4,40.0,80.5
+STU1065,Data Science,77.1,18.2,78.3,36.9,82.7
+STU1066,Data Science,80.1,17.0,80.6,39.2,79.3
+STU1067,Computer Science,60.1,15.1,54.6,27.1,63.4
+STU1068,Electronics,69.6,16.7,70.9,36.7,76.5
+STU1069,Computer Science,62.4,20.2,71.5,34.5,69.5
+STU1070,Electronics,82.4,25.6,97.3,48.4,95.7
+STU1071,Information Tech,61.8,15.0,64.4,30.1,65.2
+STU1072,Data Science,96.5,22.3,100.0,50.0,98.0
+STU1073,Information Tech,80.3,18.3,78.0,41.8,78.4
+STU1074,Information Tech,65.0,14.7,64.1,30.9,65.2
+STU1075,Computer Science,55.1,14.8,59.9,30.4,63.8
+STU1076,Computer Science,73.9,18.0,79.3,36.3,81.9
+STU1077,Electronics,63.6,16.3,56.6,27.4,65.7
+STU1078,Information Tech,71.2,17.1,68.5,32.9,74.6
+STU1079,Data Science,73.8,20.0,82.4,39.8,91.0
+STU1080,Data Science,79.3,19.6,79.6,40.0,83.7
+STU1081,Information Tech,74.5,16.7,77.1,37.9,77.1
+STU1082,Electronics,90.2,22.8,92.0,48.4,94.9
+STU1083,Data Science,55.1,16.1,58.8,26.2,64.2
+STU1084,Mechanical,69.7,17.4,76.0,35.0,80.3
+STU1085,Computer Science,87.4,22.4,91.4,44.7,95.7
+STU1086,Data Science,77.8,18.7,77.8,39.9,82.9
+STU1087,Data Science,84.7,19.1,82.3,43.1,89.3
+STU1088,Information Tech,90.2,19.5,83.4,38.1,93.6
+STU1089,Data Science,92.6,21.1,92.4,49.8,96.8
+STU1090,Mechanical,70.2,20.8,83.7,45.0,82.3
+STU1091,Mechanical,78.8,23.8,90.1,43.9,92.3
+STU1092,Data Science,55.4,15.7,62.1,28.5,61.1
+STU1093,Electronics,59.0,12.5,58.6,29.3,57.2
+STU1094,Data Science,77.0,22.1,88.9,43.9,86.3
+STU1095,Computer Science,76.0,16.8,76.4,36.6,80.5
+STU1096,Mechanical,66.2,16.2,66.8,32.0,71.3
+STU1097,Electronics,72.4,13.3,63.4,29.3,69.1
+STU1098,Computer Science,56.8,12.1,64.2,34.0,65.7
+STU1099,Computer Science,63.9,16.0,66.8,34.4,66.8
+STU1100,Computer Science,70.4,18.5,76.8,37.7,82.2
+STU1101,Information Tech,63.1,12.3,68.4,31.7,63.3
+STU1102,Data Science,63.7,13.2,70.0,30.8,72.7
+STU1103,Data Science,84.1,19.1,89.5,49.1,90.7
+STU1104,Computer Science,75.5,18.1,78.8,38.3,78.4
+STU1105,Computer Science,62.7,19.6,74.9,36.5,78.3
+STU1106,Computer Science,83.4,23.0,93.6,43.1,90.7
+STU1107,Data Science,72.9,14.7,73.1,33.5,71.3
+STU1108,Data Science,72.0,15.5,82.0,42.0,78.1
+STU1109,Electronics,71.7,17.3,71.3,32.3,78.8
+STU1110,Electronics,85.3,18.8,91.6,47.2,87.8
+STU1111,Electronics,70.1,13.5,71.9,33.3,70.2
+STU1112,Information Tech,82.3,20.6,89.6,46.5,91.3
+STU1113,Computer Science,60.0,16.6,66.4,34.1,68.5
+STU1114,Mechanical,78.7,18.8,80.5,42.1,81.7
+STU1115,Computer Science,64.5,13.8,69.5,34.2,68.9
+STU1116,Data Science,90.1,23.1,87.8,44.4,97.7
+STU1117,Computer Science,82.1,21.9,84.4,41.2,82.1
+STU1118,Information Tech,79.4,22.0,83.5,40.9,87.6
+STU1119,Data Science,59.0,10.9,51.9,23.8,58.9
+STU1120,Mechanical,83.2,19.5,86.9,41.2,89.1
