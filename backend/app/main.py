@@ -1,8 +1,21 @@
-﻿from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-from .core.database import init_db
-from .api.endpoints import dataset, analysis_routes, ml_routes, report_routes
+import sys
+from pathlib import Path
+
+# Ensure backend root directory is in sys.path
+backend_dir = Path(__file__).resolve().parent.parent
+if str(backend_dir) not in sys.path:
+    sys.path.insert(0, str(backend_dir))
+
+try:
+    from app.core.database import init_db
+    from app.api.endpoints import dataset, analysis_routes, ml_routes, report_routes
+except ImportError:
+    from .core.database import init_db
+    from .api.endpoints import dataset, analysis_routes, ml_routes, report_routes
+
 # Ensure database tables exist
 init_db()
 
@@ -49,4 +62,4 @@ async def global_exception_handler(request: Request, exc: Exception):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
+    uvicorn.run("app.main:app", host="127.0.0.1", port=8000, reload=True, app_dir=str(backend_dir))

@@ -1,0 +1,12 @@
+{
+  "name": "datalens-ai-root",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "python run_app.py",
+    "dev": "npm --prefix frontend run dev",
+    "build": "npm --prefix frontend run build",
+    "preview": "npm --prefix frontend run preview",
+    "install:all": "npm --prefix frontend install"
+  }
+}
