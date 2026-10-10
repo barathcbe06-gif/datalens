@@ -1,4 +1,4 @@
-﻿import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import {
   getDatasetProfile,
   getDatasetQuality,
@@ -41,6 +41,11 @@ export const DatasetProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState('');
   const [error, setError] = useState(null);
+
+  // Mobile navigation drawer state
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const toggleMobileMenu = () => setIsMobileMenuOpen((prev) => !prev);
+  const closeMobileMenu = () => setIsMobileMenuOpen(false);
 
   useEffect(() => {
     getSampleDatasets()
@@ -216,6 +221,10 @@ export const DatasetProvider = ({ children }) => {
         executeAutoML,
         executeForecast,
         refreshData: () => currentDataset?.dataset_id && fetchAllAnalytics(currentDataset.dataset_id),
+        isMobileMenuOpen,
+        setIsMobileMenuOpen,
+        toggleMobileMenu,
+        closeMobileMenu
       }}
     >
       {children}

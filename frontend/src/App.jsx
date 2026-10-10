@@ -12,11 +12,11 @@ const AppLayout = () => {
   const isLandingPage = location.pathname === '/';
 
   return (
-    <div className="min-h-screen bg-[#050811] text-slate-100 flex flex-col font-sans selection:bg-cyan-500/30 selection:text-cyan-200">
+    <div className="min-h-screen bg-[#050811] text-slate-100 flex flex-col font-sans selection:bg-cyan-500/30 selection:text-cyan-200 w-full overflow-x-hidden">
       {!isLandingPage && <Navbar />}
-      <div className="flex-1 flex overflow-hidden">
+      <div className="flex-1 flex w-full relative">
         {!isLandingPage && <Sidebar />}
-        <main className={`flex-1 overflow-y-auto ${isLandingPage ? 'p-0' : 'p-6 lg:p-8 max-w-7xl mx-auto w-full'}`}>
+        <main className={`flex-1 min-w-0 w-full ${isLandingPage ? 'p-0' : 'px-3 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8 max-w-7xl mx-auto'}`}>
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/upload" element={<UploadPage />} />

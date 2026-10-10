@@ -1,58 +1,52 @@
 import React from 'react';
-import { AlertTriangle } from 'lucide-react';
+import { AlertTriangle, ShieldCheck } from 'lucide-react';
 import StatCard from '../ui/StatCard';
 
 const OutliersTab = ({ outliersData }) => {
   if (!outliersData) return null;
 
   return (
-    <div className="space-y-6 font-mono">
-      <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
-        <StatCard title="IQR Outlier Rows" value={outliersData.iqr_method.total_outliers_rows} subtitle={`${outliersData.iqr_method.outliers_percentage}% affected`} color="rose" />
-        <StatCard title="Affected Columns" value={outliersData.iqr_method.columns_with_outliers_count} subtitle="Columns exceeding 1.5*IQR" color="amber" />
-        <StatCard title="Isolation Forest" value={outliersData.isolation_forest.total_outliers_rows} subtitle="Multivariate Anomalies" color="violet" />
-        <StatCard title="Contamination" value={`${outliersData.isolation_forest.outliers_percentage}%`} subtitle="Anomaly Ratio" color="cyan" />
+    <div className="space-y-4 sm:space-y-6 font-mono w-full min-w-0">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-4">
+        <StatCard title="Total Outliers" value={outliersData.total_outliers} subtitle="Anomalous records" color="rose" />
+        <StatCard title="Outlier Ratio" value={`${outliersData.outlier_percentage}%`} subtitle="Of dataset rows" color="amber" />
+        <StatCard title="Features With Outliers" value={outliersData.columns_with_outliers.length} subtitle="Contaminated cols" color="violet" />
+        <StatCard title="Clean Records" value={outliersData.clean_records?.toLocaleString()} subtitle="Within normal bounds" color="emerald" />
       </div>
 
-      <div className="bg-slate-900/60 rounded-2xl border border-slate-800 p-6 backdrop-blur-md space-y-4 shadow-lg">
-        <div className="flex justify-between items-center">
-          <h3 className="text-sm font-bold text-white flex items-center gap-2">
-            <AlertTriangle className="w-4 h-4 text-cyan-400" />
-            Feature-by-Feature Interquartile Range (IQR) Boundaries
-          </h3>
-          <span className="text-xs text-slate-400">Q1 - 1.5?IQR / Q3 + 1.5?IQR</span>
-        </div>
+      <div className="bg-slate-900/60 rounded-2xl border border-slate-800 p-4 sm:p-5 shadow-lg backdrop-blur-md space-y-3">
+        <h3 className="text-sm font-bold text-white flex items-center gap-2">
+          <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0" />
+          <span>Multivariate & IQR Outlier Diagnostics</span>
+        </h3>
+        <p className="text-xs text-slate-400 font-sans leading-relaxed">
+          Identified using Interquartile Range (IQR = Q3 - Q1) beyond 1.5x whiskers across continuous dimensions.
+        </p>
 
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs border-collapse">
-            <thead className="bg-slate-950/80 border-b border-slate-800 text-slate-400">
+        <div className="overflow-x-auto touch-scroll rounded-xl border border-slate-800/80">
+          <table className="w-full min-w-[600px] text-left text-xs border-collapse">
+            <thead className="bg-slate-950/90 border-b border-slate-800 text-slate-400 backdrop-blur-md">
               <tr>
-                <th className="p-2.5">Numerical Feature</th>
-                <th className="p-2.5">Outlier Count (%)</th>
-                <th className="p-2.5">Lower Bound</th>
-                <th className="p-2.5">Upper Bound</th>
-                <th className="p-2.5">Min/Max Extreme Outliers</th>
-                <th className="p-2.5">Sample Outlier Values</th>
+                <th className="p-2.5 sm:p-3">Feature Column</th>
+                <th className="p-2.5 sm:p-3">Outlier Count</th>
+                <th className="p-2.5 sm:p-3">Lower Bound</th>
+                <th className="p-2.5 sm:p-3">Upper Bound</th>
+                <th className="p-2.5 sm:p-3">Extreme Sample Values</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-800/60">
-              {Object.entries(outliersData.iqr_method.column_details).map(([col, d]) => (
-                <tr key={col} className="hover:bg-slate-800/30">
-                  <td className="p-2.5 font-bold text-white">{col}</td>
-                  <td className="p-2.5 text-rose-400 font-bold">{d.outlier_count} ({d.outlier_percentage}%)</td>
-                  <td className="p-2.5 text-slate-400">{d.lower_bound}</td>
-                  <td className="p-2.5 text-slate-400">{d.upper_bound}</td>
-                  <td className="p-2.5 text-slate-300">[{d.min_outlier} , {d.max_outlier}]</td>
-                  <td className="p-2.5 text-cyan-300 text-[11px] truncate max-w-[200px]">{d.sample_values?.join(', ')}</td>
+              {outliersData.columns_with_outliers.map((d) => (
+                <tr key={d.column} className="hover:bg-slate-800/30">
+                  <td className="p-2.5 sm:p-3 font-bold text-white whitespace-nowrap">{d.column}</td>
+                  <td className="p-2.5 sm:p-3 text-rose-400 font-bold whitespace-nowrap">{d.count} ({d.percentage}%)</td>
+                  <td className="p-2.5 sm:p-3 text-slate-400 whitespace-nowrap">{d.lower_bound}</td>
+                  <td className="p-2.5 sm:p-3 text-slate-400 whitespace-nowrap">{d.upper_bound}</td>
+                  <td className="p-2.5 sm:p-3 text-cyan-300 text-[11px] truncate max-w-[200px]">{d.sample_values?.join(', ')}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-
-        <p className="text-xs text-slate-400 pt-2 font-sans">
-          ?? {outliersData.interpretation}
-        </p>
       </div>
     </div>
   );

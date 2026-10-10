@@ -1,19 +1,29 @@
-﻿import React, { useState, useMemo } from 'react';
-import { Search, ChevronLeft, ChevronRight, ArrowUpDown, ArrowUp, ArrowDown } from 'lucide-react';
+import React, { useState, useMemo } from 'react';
+import {
+  ChevronLeft,
+  ChevronRight,
+  ArrowUpDown,
+  ArrowUp,
+  ArrowDown,
+  Search,
+  Filter,
+  CheckCircle2,
+  TableProperties
+} from 'lucide-react';
 
-const DataTable = ({ columns = [], data = [] }) => {
+const DataTable = ({ columns = [], data = [], initialPageSize = 10 }) => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
   const [sortCol, setSortCol] = useState(null);
   const [sortDir, setSortDir] = useState('asc');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(initialPageSize);
 
   const filteredData = useMemo(() => {
     if (!searchTerm.trim()) return data;
     const term = searchTerm.toLowerCase();
     return data.filter((row) =>
       Object.values(row).some((val) =>
-        String(val ?? '').toLowerCase().includes(term)
+        val !== null && val !== undefined && String(val).toLowerCase().includes(term)
       )
     );
   }, [data, searchTerm]);
@@ -21,12 +31,10 @@ const DataTable = ({ columns = [], data = [] }) => {
   const sortedData = useMemo(() => {
     if (!sortCol) return filteredData;
     return [...filteredData].sort((a, b) => {
-      const valA = a[sortCol];
-      const valB = b[sortCol];
-
+      let valA = a[sortCol];
+      let valB = b[sortCol];
       if (valA === null || valA === undefined) return 1;
       if (valB === null || valB === undefined) return -1;
-
       if (typeof valA === 'number' && typeof valB === 'number') {
         return sortDir === 'asc' ? valA - valB : valB - valA;
       }
@@ -53,71 +61,70 @@ const DataTable = ({ columns = [], data = [] }) => {
       setSortCol(colName);
       setSortDir('asc');
     }
-    setCurrentPage(1);
   };
 
   const getTypeBadge = (type) => {
-    switch (type) {
-      case 'numerical':
-        return <span className="text-[9px] font-mono bg-blue-500/10 text-blue-400 border border-blue-500/20 px-1.5 py-0.5 rounded">num</span>;
-      case 'categorical':
-        return <span className="text-[9px] font-mono bg-purple-500/10 text-purple-400 border border-purple-500/20 px-1.5 py-0.5 rounded">cat</span>;
-      case 'datetime':
-        return <span className="text-[9px] font-mono bg-amber-500/10 text-amber-400 border border-amber-500/20 px-1.5 py-0.5 rounded">date</span>;
-      case 'boolean':
-        return <span className="text-[9px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-1.5 py-0.5 rounded">bool</span>;
-      default:
-        return <span className="text-[9px] font-mono bg-slate-800 text-slate-400 border border-slate-700 px-1.5 py-0.5 rounded">text</span>;
-    }
+    if (!type) return null;
+    const isNum = type.includes('int') || type.includes('float');
+    const isCat = type.includes('cat') || type.includes('object');
+    const isDate = type.includes('date') || type.includes('time');
+
+    let badgeClass = 'bg-slate-800 text-slate-300 border-slate-700';
+    if (isNum) badgeClass = 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20';
+    else if (isCat) badgeClass = 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20';
+    else if (isDate) badgeClass = 'bg-amber-500/10 text-amber-400 border-amber-500/20';
+
+    return (
+      <span className={`text-[9px] font-mono px-1.5 py-0.2 rounded border ${badgeClass}`}>
+        {type}
+      </span>
+    );
   };
 
   return (
-    <div className="bg-slate-900/60 rounded-2xl border border-slate-800 overflow-hidden shadow-lg backdrop-blur-md">
-      {/* Controls Bar */}
-      <div className="p-4 border-b border-slate-800/80 flex flex-wrap items-center justify-between gap-4 bg-slate-950/40">
-        <div className="relative flex-1 min-w-[240px] max-w-sm">
-          <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+    <div className="bg-slate-900/60 rounded-2xl border border-slate-800 overflow-hidden shadow-lg backdrop-blur-md w-full">
+      {/* Controls Bar: Responsive flex */}
+      <div className="p-3 sm:p-4 border-b border-slate-800/80 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-3 bg-slate-950/40">
+        <div className="relative w-full sm:w-64">
+          <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
           <input
             type="text"
-            placeholder="Search dataset records..."
+            placeholder="Search rows in memory..."
             value={searchTerm}
             onChange={(e) => {
               setSearchTerm(e.target.value);
               setCurrentPage(1);
             }}
-            className="w-full pl-9 pr-4 py-1.5 text-xs bg-slate-900/90 border border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 text-slate-200 placeholder:text-slate-500"
+            className="w-full bg-slate-900/90 border border-slate-700/80 rounded-xl pl-9 pr-4 py-2 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-cyan-500 transition-colors font-mono min-h-[38px]"
           />
         </div>
 
-        <div className="flex items-center gap-3 text-xs text-slate-400 font-mono">
-          <span>Rows:</span>
-          <select
-            value={pageSize}
-            onChange={(e) => {
-              setPageSize(Number(e.target.value));
-              setCurrentPage(1);
-            }}
-            className="bg-slate-900 border border-slate-700 rounded-lg px-2 py-1 text-xs text-slate-300 focus:outline-none focus:border-cyan-500 cursor-pointer"
-          >
-            <option value={10}>10</option>
-            <option value={25}>25</option>
-            <option value={50}>50</option>
-          </select>
-          <span>
-            {sortedData.length ? (currentPage - 1) * pageSize + 1 : 0} -{' '}
-            {Math.min(currentPage * pageSize, sortedData.length)} of {sortedData.length}
-          </span>
+        <div className="flex items-center justify-between sm:justify-end gap-3 text-xs text-slate-400 font-mono">
+          <span>{filteredData.length} records</span>
+          <div className="flex items-center gap-2">
+            <span>Show</span>
+            <select
+              value={pageSize}
+              onChange={(e) => {
+                setPageSize(Number(e.target.value));
+                setCurrentPage(1);
+              }}
+              className="bg-slate-900 border border-slate-700 rounded-lg px-2 py-1 text-xs text-white focus:outline-none min-h-[32px]"
+            >
+              <option value={10}>10</option>
+              <option value={25}>25</option>
+              <option value={50}>50</option>
+            </select>
+          </div>
         </div>
       </div>
 
-      {/* Table Container */}
-      <div className="overflow-x-auto max-h-[500px]">
-        <table className="w-full text-left text-xs border-collapse">
-          <thead className="bg-slate-950/80 sticky top-0 z-10 border-b border-slate-800">
+      {/* Table Container: Horizontal scroll with touch-scroll */}
+      <div className="overflow-x-auto touch-scroll max-h-[500px]">
+        <table className="w-full min-w-[550px] text-left text-xs border-collapse font-mono">
+          <thead className="bg-slate-950/90 sticky top-0 border-b border-slate-800 z-10 backdrop-blur-md">
             <tr>
-              <th className="px-3.5 py-3 font-semibold text-slate-400 uppercase tracking-wider text-[10px] w-12 text-center font-mono">
-                #
-              </th>
+              <th className="px-3.5 py-3 text-center text-slate-400 w-12 font-semibold">#</th>
               {columns.map((col) => {
                 const isSorted = sortCol === col.name;
                 return (
@@ -179,21 +186,21 @@ const DataTable = ({ columns = [], data = [] }) => {
 
       {/* Pagination Footer */}
       <div className="p-3 border-t border-slate-800/80 flex items-center justify-between bg-slate-950/60 text-xs font-mono">
-        <span className="text-slate-400">
+        <span className="text-slate-400 text-[11px] sm:text-xs">
           Page <strong className="text-slate-200">{currentPage}</strong> of <strong className="text-slate-200">{totalPages}</strong>
         </span>
         <div className="flex items-center gap-1.5">
           <button
             onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
             disabled={currentPage === 1}
-            className="p-1.5 rounded-lg border border-slate-700 bg-slate-900 text-slate-300 hover:bg-slate-800 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
+            className="p-2 rounded-lg border border-slate-700 bg-slate-900 text-slate-300 hover:bg-slate-800 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer min-w-[36px] min-h-[36px] flex items-center justify-center"
           >
             <ChevronLeft className="w-4 h-4" />
           </button>
           <button
             onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
             disabled={currentPage === totalPages}
-            className="p-1.5 rounded-lg border border-slate-700 bg-slate-900 text-slate-300 hover:bg-slate-800 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
+            className="p-2 rounded-lg border border-slate-700 bg-slate-900 text-slate-300 hover:bg-slate-800 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer min-w-[36px] min-h-[36px] flex items-center justify-center"
           >
             <ChevronRight className="w-4 h-4" />
           </button>
