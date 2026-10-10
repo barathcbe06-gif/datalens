@@ -28,18 +28,14 @@ import {
   Sparkles,
   GitBranch,
   ShieldCheck,
-  Binary,
-  Radio,
-  Fingerprint,
-  Compass,
-  Boxes
+  Binary
 } from 'lucide-react';
 import { useDataset } from '../context/DatasetContext';
 
 // ============================================================================
-// 1. HIGH-PERFORMANCE 3D PROJECTED DATA UNIVERSE (ROTATING 3D POLYTOPE & CORE)
+// 1. HERO CANVAS PARTICLE UNIVERSE & CONNECTION STREAMS
 // ============================================================================
-const Hero3DDataUniverse = ({ mouseOffset }) => {
+const HeroCanvasUniverse = ({ mouseOffset }) => {
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -57,185 +53,125 @@ const Hero3DDataUniverse = ({ mouseOffset }) => {
     };
     window.addEventListener('resize', handleResize);
 
-    // 3D Sphere Vertices (Mathematical Geodesic Tensor Polytope)
-    const vertexCount = 56;
-    const vertices = [];
-    for (let i = 0; i < vertexCount; i++) {
-      const phi = Math.acos(-1 + (2 * i) / vertexCount);
-      const theta = Math.sqrt(vertexCount * Math.PI) * phi;
-      const radius = 175;
-      vertices.push({
-        x: radius * Math.cos(theta) * Math.sin(phi),
-        y: radius * Math.sin(theta) * Math.sin(phi),
-        z: radius * Math.cos(phi),
-        size: Math.random() * 2 + 1.2,
-        color: i % 3 === 0 ? '#38bdf8' : i % 3 === 1 ? '#818cf8' : '#c084fc'
-      });
-    }
-
-    // Micro Cosmic Background Particles
-    const bgParticles = Array.from({ length: 65 }, () => ({
+    // Microscopic data particles
+    const particleCount = Math.min(85, Math.floor((width * height) / 12000));
+    const particles = Array.from({ length: particleCount }, () => ({
       x: Math.random() * width,
       y: Math.random() * height,
-      vx: (Math.random() - 0.5) * 0.35,
-      vy: (Math.random() - 0.5) * 0.35,
-      size: Math.random() * 1.5 + 0.5,
-      opacity: Math.random() * 0.5 + 0.15
+      vx: (Math.random() - 0.5) * 0.45,
+      vy: (Math.random() - 0.5) * 0.45,
+      size: Math.random() * 1.8 + 0.6,
+      opacity: Math.random() * 0.55 + 0.15,
+      pulseSpeed: Math.random() * 0.02 + 0.01,
+      pulseVal: Math.random() * Math.PI
     }));
 
-    // Traveling Energy Streams
+    // Data streams radiating from perimeter into center core
     const streams = [
-      { angle: 0.2, speed: 0.0035, progress: 0.1, color: '#38bdf8' },
-      { angle: 1.1, speed: 0.004, progress: 0.45, color: '#818cf8' },
-      { angle: 2.3, speed: 0.003, progress: 0.8, color: '#22d3ee' },
-      { angle: 3.5, speed: 0.0045, progress: 0.25, color: '#c084fc' },
-      { angle: 4.6, speed: 0.0032, progress: 0.65, color: '#38bdf8' },
-      { angle: 5.4, speed: 0.0038, progress: 0.9, color: '#818cf8' }
+      { startAngle: 0.15, speed: 0.003, progress: 0.1, color: 'rgba(56, 189, 248, ' },
+      { startAngle: 0.85, speed: 0.004, progress: 0.6, color: 'rgba(99, 102, 241, ' },
+      { startAngle: 1.45, speed: 0.0035, progress: 0.35, color: 'rgba(168, 85, 247, ' },
+      { startAngle: 2.1, speed: 0.0045, progress: 0.8, color: 'rgba(6, 182, 212, ' },
+      { startAngle: 2.7, speed: 0.003, progress: 0.25, color: 'rgba(56, 189, 248, ' },
+      { startAngle: 3.4, speed: 0.004, progress: 0.75, color: 'rgba(99, 102, 241, ' },
+      { startAngle: 4.2, speed: 0.0038, progress: 0.45, color: 'rgba(168, 85, 247, ' },
+      { startAngle: 5.1, speed: 0.0032, progress: 0.9, color: 'rgba(6, 182, 212, ' }
     ];
 
-    let rotX = 0;
-    let rotY = 0;
     let t = 0;
-
     const render = () => {
-      t += 0.012;
-      rotX += 0.0025 + mouseOffset.y * 0.004;
-      rotY += 0.004 + mouseOffset.x * 0.006;
-
+      t += 0.015;
       ctx.clearRect(0, 0, width, height);
 
-      const centerX = width / 2;
-      const centerY = height / 2;
+      const centerX = width / 2 + mouseOffset.x * 25;
+      const centerY = height / 2 + mouseOffset.y * 25;
 
-      // 1. Cybernetic Hex-Grid Radar Rings
+      // Subtle isometric grid
       ctx.strokeStyle = 'rgba(56, 189, 248, 0.035)';
       ctx.lineWidth = 1;
-      const gridSize = 50;
-      for (let x = 0; x < width; x += gridSize) {
+      const gridSize = 48;
+      const startX = (mouseOffset.x * 15) % gridSize;
+      const startY = (mouseOffset.y * 15) % gridSize;
+
+      for (let x = startX; x < width; x += gridSize) {
         ctx.beginPath();
         ctx.moveTo(x, 0);
         ctx.lineTo(x, height);
         ctx.stroke();
       }
-      for (let y = 0; y < height; y += gridSize) {
+      for (let y = startY; y < height; y += gridSize) {
         ctx.beginPath();
         ctx.moveTo(0, y);
         ctx.lineTo(width, y);
         ctx.stroke();
       }
 
-      // Background ambient particles
-      bgParticles.forEach((p) => {
-        p.x += p.vx;
-        p.y += p.vy;
+      // Traveling laser streams into core
+      streams.forEach((stream) => {
+        stream.progress += stream.speed;
+        if (stream.progress > 1) stream.progress = 0;
+
+        const maxRadius = Math.min(width, height) * 0.48;
+        const currentRadius = maxRadius * (1 - stream.progress);
+        const angle = stream.startAngle + Math.sin(t * 0.5 + stream.startAngle) * 0.15;
+        const sx = centerX + Math.cos(angle) * maxRadius;
+        const sy = centerY + Math.sin(angle) * maxRadius;
+        const px = centerX + Math.cos(angle) * currentRadius;
+        const py = centerY + Math.sin(angle) * currentRadius;
+
+        ctx.beginPath();
+        ctx.moveTo(sx, sy);
+        ctx.quadraticCurveTo(
+          centerX + Math.cos(angle + 0.4) * (maxRadius * 0.5),
+          centerY + Math.sin(angle + 0.4) * (maxRadius * 0.5),
+          centerX,
+          centerY
+        );
+        ctx.strokeStyle = `${stream.color}0.12)`;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        const alpha = Math.sin(stream.progress * Math.PI);
+        ctx.beginPath();
+        ctx.arc(px, py, 2.5, 0, Math.PI * 2);
+        ctx.fillStyle = `${stream.color}${alpha})`;
+        ctx.shadowColor = 'rgba(56, 189, 248, 0.8)';
+        ctx.shadowBlur = 8;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      });
+
+      // Microscopic particles
+      particles.forEach((p, i) => {
+        p.x += p.vx + mouseOffset.x * 0.2;
+        p.y += p.vy + mouseOffset.y * 0.2;
+        p.pulseVal += p.pulseSpeed;
+
         if (p.x < 0) p.x = width;
         if (p.x > width) p.x = 0;
         if (p.y < 0) p.y = height;
         if (p.y > height) p.y = 0;
 
+        const currentOpacity = p.opacity * (0.6 + 0.4 * Math.sin(p.pulseVal));
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(147, 197, 253, ${p.opacity})`;
+        ctx.fillStyle = `rgba(147, 197, 253, ${currentOpacity})`;
         ctx.fill();
-      });
 
-      // 2. Continuous Radial Streams Ingestion into 3D Core
-      streams.forEach((stream) => {
-        stream.progress += stream.speed;
-        if (stream.progress > 1) stream.progress = 0;
-
-        const maxR = Math.min(width, height) * 0.44;
-        const currentR = maxR * (1 - stream.progress);
-        const theta = stream.angle + Math.sin(t + stream.angle) * 0.2;
-        const px = centerX + Math.cos(theta) * currentR;
-        const py = centerY + Math.sin(theta) * currentR;
-
-        // Curved Laser Filament
-        ctx.beginPath();
-        ctx.moveTo(centerX + Math.cos(theta) * maxR, centerY + Math.sin(theta) * maxR);
-        ctx.quadraticCurveTo(
-          centerX + Math.cos(theta + 0.3) * (maxR * 0.5),
-          centerY + Math.sin(theta + 0.3) * (maxR * 0.5),
-          centerX,
-          centerY
-        );
-        ctx.strokeStyle = `${stream.color}20`;
-        ctx.lineWidth = 1.2;
-        ctx.stroke();
-
-        // Traveling glowing quantum packet
-        const alpha = Math.sin(stream.progress * Math.PI);
-        ctx.beginPath();
-        ctx.arc(px, py, 2.5, 0, Math.PI * 2);
-        ctx.fillStyle = stream.color;
-        ctx.shadowColor = stream.color;
-        ctx.shadowBlur = 10 * alpha;
-        ctx.fill();
-        ctx.shadowBlur = 0;
-      });
-
-      // 3. 3D Rotating Tensor Polytope (Wireframe Sphere Projected to 2D)
-      const fov = 380;
-      const projected = vertices.map((v) => {
-        // Rotate around Y
-        const cosY = Math.cos(rotY);
-        const sinY = Math.sin(rotY);
-        const x1 = v.x * cosY - v.z * sinY;
-        const z1 = v.z * cosY + v.x * sinY;
-
-        // Rotate around X
-        const cosX = Math.cos(rotX);
-        const sinX = Math.sin(rotX);
-        const y2 = v.y * cosX - z1 * sinX;
-        const z2 = z1 * cosX + v.y * sinX;
-
-        // 3D Perspective Projection
-        const scale = fov / (fov + z2);
-        return {
-          px: centerX + x1 * scale,
-          py: centerY + y2 * scale,
-          pz: z2,
-          scale,
-          color: v.color,
-          size: v.size * scale
-        };
-      });
-
-      // Sort by depth (painter's algorithm)
-      projected.sort((a, b) => b.pz - a.pz);
-
-      // Connect proximate 3D vertices with glowing filaments
-      for (let i = 0; i < projected.length; i++) {
-        const p1 = projected[i];
-        for (let j = i + 1; j < projected.length; j++) {
-          const p2 = projected[j];
-          const dx = p1.px - p2.px;
-          const dy = p1.py - p2.py;
+        for (let j = i + 1; j < particles.length; j++) {
+          const p2 = particles[j];
+          const dx = p.x - p2.x;
+          const dy = p.y - p2.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 60) {
-            const alpha = (1 - dist / 60) * 0.18 * ((p1.pz + 180) / 360);
+          if (dist < 85) {
             ctx.beginPath();
-            ctx.moveTo(p1.px, p1.py);
-            ctx.lineTo(p2.px, p2.py);
-            ctx.strokeStyle = `rgba(56, 189, 248, ${Math.max(0.02, alpha)})`;
-            ctx.lineWidth = 0.8;
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.strokeStyle = `rgba(99, 102, 241, ${(1 - dist / 85) * 0.12})`;
+            ctx.lineWidth = 0.75;
             ctx.stroke();
           }
         }
-      }
-
-      // Draw vertices
-      projected.forEach((p) => {
-        const alpha = Math.max(0.2, (p.pz + 180) / 360);
-        ctx.beginPath();
-        ctx.arc(p.px, p.py, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = p.color;
-        ctx.shadowColor = p.color;
-        ctx.shadowBlur = p.pz > 0 ? 8 : 2;
-        ctx.globalAlpha = alpha;
-        ctx.fill();
-        ctx.globalAlpha = 1;
-        ctx.shadowBlur = 0;
       });
 
       animationFrameId = requestAnimationFrame(render);
@@ -253,7 +189,7 @@ const Hero3DDataUniverse = ({ mouseOffset }) => {
 };
 
 // ============================================================================
-// 2. CHAOS TO CLARITY MANIFOLD CANVAS (MORPHING 4D ENTROPY ENGINE)
+// 2. CHAOS TO CLARITY CANVAS SIMULATION (4 STAGES)
 // ============================================================================
 const ChaosToClarityCanvas = ({ stage, entropyValue }) => {
   const canvasRef = useRef(null);
@@ -274,23 +210,24 @@ const ChaosToClarityCanvas = ({ stage, entropyValue }) => {
     };
     window.addEventListener('resize', handleResize);
 
-    const POINT_COUNT = 380;
+    const POINT_COUNT = 320;
     const points = Array.from({ length: POINT_COUNT }, (_, i) => {
-      const chartX = 0.12 + (i / POINT_COUNT) * 0.76;
-      // Multi-modal polynomial with Gaussian dispersion
-      const chartY = 0.5 - 0.26 * Math.sin(chartX * Math.PI * 1.6) + (Math.random() - 0.5) * 0.07;
+      const chartX = 0.15 + (i / POINT_COUNT) * 0.7;
+      const chartY = 0.5 - 0.28 * Math.sin(chartX * Math.PI * 1.5) + (Math.random() - 0.5) * 0.08;
 
       return {
         id: i,
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 2.2,
-        vy: (Math.random() - 0.5) * 2.2,
-        clusterX: (i % 3 === 0 ? 0.28 : i % 3 === 1 ? 0.5 : 0.72) + (Math.random() - 0.5) * 0.12,
-        clusterY: (i % 3 === 0 ? 0.38 : i % 3 === 1 ? 0.62 : 0.36) + (Math.random() - 0.5) * 0.12,
+        vx: (Math.random() - 0.5) * 1.8,
+        vy: (Math.random() - 0.5) * 1.8,
+        gridX: 0.2 + (i % 20) * 0.03,
+        gridY: 0.2 + Math.floor(i / 20) * 0.035,
+        clusterX: (i % 3 === 0 ? 0.3 : i % 3 === 1 ? 0.5 : 0.7) + (Math.random() - 0.5) * 0.12,
+        clusterY: (i % 3 === 0 ? 0.35 : i % 3 === 1 ? 0.65 : 0.4) + (Math.random() - 0.5) * 0.12,
         finalX: chartX,
         finalY: chartY,
-        color: i % 4 === 0 ? '#22d3ee' : i % 4 === 1 ? '#818cf8' : i % 4 === 2 ? '#c084fc' : '#38bdf8'
+        color: i % 4 === 0 ? '#38bdf8' : i % 4 === 1 ? '#818cf8' : i % 4 === 2 ? '#c084fc' : '#22d3ee'
       };
     });
 
@@ -299,124 +236,113 @@ const ChaosToClarityCanvas = ({ stage, entropyValue }) => {
 
       const clarityFactor = 1 - entropyValue / 100;
 
-      // Draw Mathematical Coordinate Geometry
-      if (clarityFactor > 0.3) {
-        const axisAlpha = (clarityFactor - 0.3) / 0.7;
-        ctx.strokeStyle = `rgba(148, 163, 184, ${axisAlpha * 0.3})`;
+      if (clarityFactor > 0.35) {
+        const axisAlpha = (clarityFactor - 0.35) / 0.65;
+        ctx.strokeStyle = `rgba(148, 163, 184, ${axisAlpha * 0.25})`;
         ctx.lineWidth = 1;
 
-        // X and Y Principal Axes
         ctx.beginPath();
-        ctx.moveTo(width * 0.08, height * 0.86);
-        ctx.lineTo(width * 0.92, height * 0.86);
+        ctx.moveTo(width * 0.1, height * 0.85);
+        ctx.lineTo(width * 0.9, height * 0.85);
         ctx.stroke();
 
         ctx.beginPath();
-        ctx.moveTo(width * 0.08, height * 0.86);
-        ctx.lineTo(width * 0.08, height * 0.14);
+        ctx.moveTo(width * 0.1, height * 0.85);
+        ctx.lineTo(width * 0.1, height * 0.15);
         ctx.stroke();
 
-        // High-Precision Grid Ticks & Labels
-        ctx.fillStyle = `rgba(148, 163, 184, ${axisAlpha * 0.6})`;
-        ctx.font = '9px monospace';
         for (let k = 0.2; k <= 0.85; k += 0.15) {
-          const tx = width * k;
           ctx.beginPath();
-          ctx.moveTo(tx, height * 0.86);
-          ctx.lineTo(tx, height * 0.86 - 6);
+          ctx.moveTo(width * k, height * 0.85);
+          ctx.lineTo(width * k, height * 0.85 - 6);
           ctx.stroke();
-          ctx.fillText(`+${Math.round(k * 100)}σ`, tx - 10, height * 0.86 + 14);
         }
       }
 
       points.forEach((p, idx) => {
         let targetX, targetY;
 
-        if (clarityFactor < 0.28) {
+        if (clarityFactor < 0.3) {
           p.x += p.vx;
           p.y += p.vy;
-          if (p.x < 15 || p.x > width - 15) p.vx *= -1;
-          if (p.y < 15 || p.y > height - 15) p.vy *= -1;
+          if (p.x < 20 || p.x > width - 20) p.vx *= -1;
+          if (p.y < 20 || p.y > height - 20) p.vy *= -1;
           targetX = p.x;
           targetY = p.y;
-        } else if (clarityFactor < 0.68) {
-          const sub = (clarityFactor - 0.28) / 0.4;
+        } else if (clarityFactor < 0.65) {
+          const subFactor = (clarityFactor - 0.3) / 0.35;
           targetX = width * p.clusterX;
           targetY = height * p.clusterY;
-          p.x += (targetX - p.x) * (0.06 * sub);
-          p.y += (targetY - p.y) * (0.06 * sub);
+          p.x += (targetX - p.x) * (0.05 * subFactor);
+          p.y += (targetY - p.y) * (0.05 * subFactor);
         } else {
-          const sub = (clarityFactor - 0.68) / 0.32;
+          const subFactor = (clarityFactor - 0.65) / 0.35;
           targetX = width * p.finalX;
           targetY = height * p.finalY;
-          p.x += (targetX - p.x) * (0.09 * sub);
-          p.y += (targetY - p.y) * (0.09 * sub);
+          p.x += (targetX - p.x) * (0.08 * subFactor);
+          p.y += (targetY - p.y) * (0.08 * subFactor);
         }
 
         ctx.beginPath();
-        ctx.arc(p.x, p.y, clarityFactor > 0.7 ? 2.5 : 1.8, 0, Math.PI * 2);
+        ctx.arc(p.x, p.y, clarityFactor > 0.7 ? 2.5 : 2.0, 0, Math.PI * 2);
         ctx.fillStyle = p.color;
         ctx.shadowColor = p.color;
-        ctx.shadowBlur = clarityFactor > 0.6 ? 8 : 1;
+        ctx.shadowBlur = clarityFactor > 0.6 ? 6 : 2;
         ctx.fill();
         ctx.shadowBlur = 0;
 
-        // Triangulated Synapses between nearest points
-        if (clarityFactor > 0.25 && clarityFactor < 0.96) {
-          for (let j = idx + 1; j < Math.min(idx + 14, points.length); j++) {
+        if (clarityFactor > 0.25 && clarityFactor < 0.95) {
+          for (let j = idx + 1; j < Math.min(idx + 12, points.length); j++) {
             const p2 = points[j];
             const dx = p.x - p2.x;
             const dy = p.y - p2.y;
             const dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < 60) {
+            if (dist < 65) {
               ctx.beginPath();
               ctx.moveTo(p.x, p.y);
               ctx.lineTo(p2.x, p2.y);
-              ctx.strokeStyle = `rgba(56, 189, 248, ${(1 - dist / 60) * 0.28 * clarityFactor})`;
-              ctx.lineWidth = 0.9;
+              ctx.strokeStyle = `rgba(56, 189, 248, ${(1 - dist / 65) * 0.25 * clarityFactor})`;
+              ctx.lineWidth = 1;
               ctx.stroke();
             }
           }
         }
       });
 
-      // Draw Fitted Non-Linear Regression Curve with Confidence Bands
-      if (clarityFactor > 0.72) {
-        const lineAlpha = (clarityFactor - 0.72) / 0.28;
+      if (clarityFactor > 0.75) {
+        const lineAlpha = (clarityFactor - 0.75) / 0.25;
         ctx.beginPath();
-        ctx.strokeStyle = `rgba(34, 211, 238, ${lineAlpha * 0.95})`;
+        ctx.strokeStyle = `rgba(34, 211, 238, ${lineAlpha * 0.85})`;
         ctx.lineWidth = 2.5;
-        ctx.shadowColor = 'rgba(34, 211, 238, 0.95)';
-        ctx.shadowBlur = 14;
+        ctx.shadowColor = 'rgba(34, 211, 238, 0.9)';
+        ctx.shadowBlur = 12;
 
-        for (let px = width * 0.12; px <= width * 0.88; px += 6) {
-          const normX = (px - width * 0.12) / (width * 0.76);
-          const py = height * (0.5 - 0.26 * Math.sin((0.12 + normX * 0.76) * Math.PI * 1.6));
-          if (px === width * 0.12) ctx.moveTo(px, py);
+        for (let px = width * 0.15; px <= width * 0.85; px += 8) {
+          const normX = (px - width * 0.15) / (width * 0.7);
+          const py = height * (0.5 - 0.28 * Math.sin((0.15 + normX * 0.7) * Math.PI * 1.5));
+          if (px === width * 0.15) ctx.moveTo(px, py);
           else ctx.lineTo(px, py);
         }
         ctx.stroke();
         ctx.shadowBlur = 0;
 
-        // Upper & Lower 95% Confidence Bounds
         ctx.beginPath();
-        ctx.strokeStyle = `rgba(129, 140, 248, ${lineAlpha * 0.4})`;
+        ctx.strokeStyle = `rgba(129, 140, 248, ${lineAlpha * 0.35})`;
         ctx.lineWidth = 1;
         ctx.setLineDash([4, 4]);
-
-        for (let px = width * 0.12; px <= width * 0.88; px += 6) {
-          const normX = (px - width * 0.12) / (width * 0.76);
-          const py = height * (0.5 - 0.26 * Math.sin((0.12 + normX * 0.76) * Math.PI * 1.6)) - 24;
-          if (px === width * 0.12) ctx.moveTo(px, py);
+        for (let px = width * 0.15; px <= width * 0.85; px += 8) {
+          const normX = (px - width * 0.15) / (width * 0.7);
+          const py = height * (0.5 - 0.28 * Math.sin((0.15 + normX * 0.7) * Math.PI * 1.5)) - 22;
+          if (px === width * 0.15) ctx.moveTo(px, py);
           else ctx.lineTo(px, py);
         }
         ctx.stroke();
 
         ctx.beginPath();
-        for (let px = width * 0.12; px <= width * 0.88; px += 6) {
-          const normX = (px - width * 0.12) / (width * 0.76);
-          const py = height * (0.5 - 0.26 * Math.sin((0.12 + normX * 0.76) * Math.PI * 1.6)) + 24;
-          if (px === width * 0.12) ctx.moveTo(px, py);
+        for (let px = width * 0.15; px <= width * 0.85; px += 8) {
+          const normX = (px - width * 0.15) / (width * 0.7);
+          const py = height * (0.5 - 0.28 * Math.sin((0.15 + normX * 0.7) * Math.PI * 1.5)) + 22;
+          if (px === width * 0.15) ctx.moveTo(px, py);
           else ctx.lineTo(px, py);
         }
         ctx.stroke();
@@ -438,102 +364,24 @@ const ChaosToClarityCanvas = ({ stage, entropyValue }) => {
 };
 
 // ============================================================================
-// 3. DATA DNA BIOLOGICAL-QUANTUM HELIX CANVAS
-// ============================================================================
-const DataDnaHelixCanvas = ({ activeNode }) => {
-  const canvasRef = useRef(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    let animationFrameId;
-
-    let width = (canvas.width = canvas.parentElement.offsetWidth);
-    let height = (canvas.height = canvas.parentElement.offsetHeight);
-
-    const handleResize = () => {
-      if (!canvas.parentElement) return;
-      width = canvas.width = canvas.parentElement.offsetWidth;
-      height = canvas.height = canvas.parentElement.offsetHeight;
-    };
-    window.addEventListener('resize', handleResize);
-
-    let t = 0;
-    const render = () => {
-      t += 0.022;
-      ctx.clearRect(0, 0, width, height);
-
-      const rungs = 24;
-      const centerY = height / 2;
-      const amplitude = Math.min(65, height * 0.32);
-
-      for (let i = 0; i < rungs; i++) {
-        const x = (width * 0.12) + (i / rungs) * (width * 0.76);
-        const phase = t + (i * 0.28);
-        const y1 = centerY + Math.sin(phase) * amplitude;
-        const y2 = centerY - Math.sin(phase) * amplitude;
-        const depth = Math.cos(phase);
-
-        // Connecting hydrogen bond rung
-        ctx.beginPath();
-        ctx.moveTo(x, y1);
-        ctx.lineTo(x, y2);
-        ctx.strokeStyle = `rgba(99, 102, 241, ${0.15 + Math.abs(depth) * 0.25})`;
-        ctx.lineWidth = 1;
-        ctx.stroke();
-
-        // Strand 1 Nucleotide
-        ctx.beginPath();
-        ctx.arc(x, y1, 3.5 + depth * 1.5, 0, Math.PI * 2);
-        ctx.fillStyle = depth > 0 ? '#22d3ee' : '#0891b2';
-        ctx.shadowColor = '#22d3ee';
-        ctx.shadowBlur = depth > 0 ? 8 : 2;
-        ctx.fill();
-
-        // Strand 2 Nucleotide
-        ctx.beginPath();
-        ctx.arc(x, y2, 3.5 - depth * 1.5, 0, Math.PI * 2);
-        ctx.fillStyle = depth < 0 ? '#c084fc' : '#7c3aed';
-        ctx.shadowColor = '#c084fc';
-        ctx.shadowBlur = depth < 0 ? 8 : 2;
-        ctx.fill();
-        ctx.shadowBlur = 0;
-      }
-
-      animationFrameId = requestAnimationFrame(render);
-    };
-
-    render();
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      cancelAnimationFrame(animationFrameId);
-    };
-  }, [activeNode]);
-
-  return <canvas ref={canvasRef} className="w-full h-full block" />;
-};
-
-// ============================================================================
-// MAIN DATALENS AI LANDING EXPERIENCE
+// MAIN LANDING PAGE COMPONENT
 // ============================================================================
 const LandingPage = () => {
   const navigate = useNavigate();
   const { loadSample, samplesList, loading } = useDataset();
 
-  // Scroll states
+  // Navigation scroll state
   const [scrolled, setScrolled] = useState(false);
   const [activeNav, setActiveNav] = useState('hero');
 
   // Mouse tilt for Hero Universe
   const [mouseOffset, setMouseOffset] = useState({ x: 0, y: 0 });
 
-  // Floating Objects Orbit Hover State
+  // Hero Data Objects Orbit Hover State
   const [hoveredNode, setHoveredNode] = useState(null);
 
   // Chaos to Clarity interactive state
-  const [chaosStage, setChaosStage] = useState(0);
+  const [chaosStage, setChaosStage] = useState(0); // 0: Chaos, 1: Organize, 2: Connect, 3: Clarity
   const [entropyValue, setEntropyValue] = useState(100);
 
   // Data DNA interactive node state
@@ -576,7 +424,7 @@ const LandingPage = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Mouse parallax
+  // Mouse move parallax
   const handleMouseMove = useCallback((e) => {
     const { clientX, clientY } = e;
     const { innerWidth, innerHeight } = window;
@@ -599,7 +447,6 @@ const LandingPage = () => {
       {
         id: 'CSV',
         label: 'CSV',
-        code: 'INGEST.01',
         type: 'INPUT',
         angle: 200,
         icon: FileSpreadsheet,
@@ -609,7 +456,6 @@ const LandingPage = () => {
       {
         id: 'EXCEL',
         label: 'EXCEL',
-        code: 'INGEST.02',
         type: 'INPUT',
         angle: 155,
         icon: TableProperties,
@@ -619,7 +465,6 @@ const LandingPage = () => {
       {
         id: 'ROWS',
         label: 'ROWS',
-        code: 'TENSOR.DIM',
         type: 'STRUCTURE',
         angle: 245,
         icon: Binary,
@@ -629,7 +474,6 @@ const LandingPage = () => {
       {
         id: 'COLUMNS',
         label: 'COLUMNS',
-        code: 'FEATURE.SPACE',
         type: 'STRUCTURE',
         angle: 115,
         icon: Database,
@@ -639,7 +483,6 @@ const LandingPage = () => {
       {
         id: 'PATTERNS',
         label: 'PATTERNS',
-        code: 'COGNITION.01',
         type: 'COGNITION',
         angle: 70,
         icon: Sparkles,
@@ -650,7 +493,6 @@ const LandingPage = () => {
       {
         id: 'CORRELATION',
         label: 'CORRELATION',
-        code: 'COVARIANCE',
         type: 'COGNITION',
         angle: 290,
         icon: GitBranch,
@@ -660,7 +502,6 @@ const LandingPage = () => {
       {
         id: 'INSIGHTS',
         label: 'INSIGHTS',
-        code: 'SYNTHESIS',
         type: 'OUTPUT',
         angle: 25,
         icon: Eye,
@@ -671,7 +512,6 @@ const LandingPage = () => {
       {
         id: 'ML',
         label: 'ML',
-        code: 'TOURNAMENT',
         type: 'OUTPUT',
         angle: 335,
         icon: BrainCircuit,
@@ -682,7 +522,6 @@ const LandingPage = () => {
       {
         id: 'PREDICTION',
         label: 'PREDICTION',
-        code: 'FORECAST.CONE',
         type: 'OUTPUT',
         angle: 350,
         icon: TrendingUp,
@@ -741,6 +580,7 @@ const LandingPage = () => {
     []
   );
 
+  // Use live backend sample datasets if available, else fallback
   const displaySamples = useMemo(() => {
     if (samplesList && samplesList.length > 0) {
       return samplesList.map((s) => ({
@@ -765,6 +605,7 @@ const LandingPage = () => {
     }
   };
 
+  // Queries for Ask Your Data Terminal
   const queries = [
     {
       query: '> Which factors influence student performance?',
@@ -801,6 +642,7 @@ const LandingPage = () => {
     }
   ];
 
+  // ML Models Selector Data
   const mlModels = {
     xgb: {
       name: 'XGBoost Gradient Boosted Trees',
@@ -811,7 +653,7 @@ const LandingPage = () => {
       rmse: '0.0412',
       latency: '1.4ms',
       loss: '0.038',
-      nodes: 300
+      architecture: ['Dense Data Vectors (32)', 'Histogram Split Nodes (128)', 'Gradient Tree Boosting (300)', 'Probability Leaf Output']
     },
     lgb: {
       name: 'LightGBM Leaf-Wise Regressor',
@@ -822,7 +664,7 @@ const LandingPage = () => {
       rmse: '0.0435',
       latency: '0.8ms',
       loss: '0.041',
-      nodes: 256
+      architecture: ['Dense Data Vectors (32)', 'Exclusive Feature Bundling', 'Leaf-Wise Tree Growth', 'Linear Residual Sum']
     },
     rf: {
       name: 'Random Forest Ensemble Classifier',
@@ -833,7 +675,7 @@ const LandingPage = () => {
       rmse: '0.0489',
       latency: '2.1ms',
       loss: '0.052',
-      nodes: 200
+      architecture: ['Dense Data Vectors (32)', 'Bootstrap Aggregation (200)', 'Entropy Partition Voting', 'Argmax Consensus']
     },
     dnn: {
       name: 'Deep Tensor Neural Network',
@@ -844,7 +686,7 @@ const LandingPage = () => {
       rmse: '0.0368',
       latency: '3.6ms',
       loss: '0.029',
-      nodes: 512
+      architecture: ['Input Tensor (32)', 'Layer 1: ReLU + BatchNorm (128)', 'Layer 2: Dropout 0.2 (64)', 'Softmax Distribution']
     }
   };
 
@@ -853,24 +695,16 @@ const LandingPage = () => {
       onMouseMove={handleMouseMove}
       className="min-h-screen bg-[#02040a] text-slate-100 font-sans selection:bg-cyan-500/30 selection:text-cyan-200 overflow-x-hidden relative"
     >
-      {/* Subtle CRT Scanline & Grain Texture */}
-      <div className="fixed inset-0 pointer-events-none z-40 bg-[linear-gradient(rgba(18,24,38,0)_50%,rgba(0,0,0,0.25)_50%)] bg-[length:100%_4px] opacity-20" />
-
-      {/* Cybernetic Coordinate Stamps */}
-      <div className="fixed top-24 left-6 z-30 pointer-events-none hidden xl:flex flex-col gap-1 text-[9px] font-mono text-slate-500">
-        <span>LOC // 37.7749° N, 122.4194° W</span>
-        <span>SYS // QUANTUM TENSOR ENGINE v2.6</span>
-        <span>LAT // 1.2ms [ZERO LEAKAGE]</span>
-      </div>
-
       {/* ===================================================================== */}
       {/* 4. MINIMAL FLOATING GLASS NAVIGATION BAR                               */}
       {/* ===================================================================== */}
-      <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 flex justify-center px-4 pt-4 pb-2 pointer-events-none">
+      <header
+        className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 flex justify-center px-4 pt-4 pb-2 pointer-events-none"
+      >
         <div
           className={`w-full max-w-6xl mx-auto flex items-center justify-between transition-all duration-300 pointer-events-auto ${
             scrolled
-              ? 'bg-[#030712]/90 backdrop-blur-2xl border border-cyan-500/30 shadow-[0_8px_32px_rgba(0,0,0,0.8)] py-2 px-6 rounded-full'
+              ? 'bg-[#030712]/85 backdrop-blur-xl border border-cyan-500/25 shadow-[0_8px_32px_rgba(0,0,0,0.7)] py-2.5 px-6 rounded-full'
               : 'bg-transparent py-4 px-2'
           }`}
         >
@@ -879,10 +713,11 @@ const LandingPage = () => {
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             className="flex items-center gap-3 cursor-pointer group"
           >
-            <div className="relative w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-400 via-blue-600 to-indigo-700 p-0.5 shadow-lg shadow-cyan-500/25 group-hover:scale-105 transition-transform flex items-center justify-center">
-              <div className="w-full h-full bg-[#030712] rounded-[6px] flex items-center justify-center">
-                <Radar className="w-4 h-4 text-cyan-400 animate-spin" style={{ animationDuration: '14s' }} />
+            <div className="relative w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-500 via-blue-600 to-indigo-700 p-0.5 shadow-md shadow-cyan-500/20 group-hover:scale-105 transition-transform flex items-center justify-center">
+              <div className="w-full h-full bg-[#030712] rounded-[7px] flex items-center justify-center">
+                <Radar className="w-4 h-4 text-cyan-400 animate-spin" style={{ animationDuration: '18s' }} />
               </div>
+              <div className="absolute -inset-1 rounded-lg bg-cyan-400/20 blur-sm -z-10 group-hover:bg-cyan-400/40 transition-colors" />
             </div>
 
             <div className="flex flex-col">
@@ -890,8 +725,8 @@ const LandingPage = () => {
                 <span className="text-base font-black tracking-tight text-white group-hover:text-cyan-300 transition-colors">
                   DATALENS <span className="text-cyan-400 font-light">AI</span>
                 </span>
-                <span className="text-[9px] font-mono font-bold tracking-widest px-1.5 py-0.2 rounded border border-cyan-500/30 bg-cyan-950/60 text-cyan-400">
-                  CORE
+                <span className="text-[9px] font-mono font-bold tracking-wider px-1.5 py-0.2 rounded border border-cyan-500/30 bg-cyan-950/40 text-cyan-400">
+                  ENGINE
                 </span>
               </div>
               <span className="text-[10px] font-mono text-slate-400 hidden sm:inline-block">
@@ -900,20 +735,20 @@ const LandingPage = () => {
             </div>
           </div>
 
-          {/* Center: Minimal Section Links */}
-          <nav className="hidden md:flex items-center gap-1 text-xs font-medium text-slate-300 bg-slate-900/60 px-3 py-1.5 rounded-full border border-slate-800/80 backdrop-blur-xl">
+          {/* Center: Minimal Links */}
+          <nav className="hidden md:flex items-center gap-1 text-xs font-medium text-slate-300 bg-slate-900/50 px-3 py-1.5 rounded-full border border-slate-800/80 backdrop-blur-md">
             <a
               href="#hero"
               className={`px-3 py-1 rounded-full transition-all ${
-                activeNav === 'hero' ? 'text-cyan-300 bg-cyan-950/80 font-semibold shadow-sm' : 'hover:text-white'
+                activeNav === 'hero' ? 'text-cyan-300 bg-cyan-950/70 font-semibold' : 'hover:text-white'
               }`}
             >
-              Universe
+              Explore
             </a>
             <a
               href="#chaos-to-clarity"
               className={`px-3 py-1 rounded-full transition-all ${
-                activeNav === 'chaos-to-clarity' ? 'text-cyan-300 bg-cyan-950/80 font-semibold shadow-sm' : 'hover:text-white'
+                activeNav === 'chaos-to-clarity' ? 'text-cyan-300 bg-cyan-950/70 font-semibold' : 'hover:text-white'
               }`}
             >
               Clarity
@@ -921,7 +756,7 @@ const LandingPage = () => {
             <a
               href="#data-dna"
               className={`px-3 py-1 rounded-full transition-all ${
-                activeNav === 'data-dna' ? 'text-cyan-300 bg-cyan-950/80 font-semibold shadow-sm' : 'hover:text-white'
+                activeNav === 'data-dna' ? 'text-cyan-300 bg-cyan-950/70 font-semibold' : 'hover:text-white'
               }`}
             >
               Data DNA
@@ -929,15 +764,15 @@ const LandingPage = () => {
             <a
               href="#intelligence-layers"
               className={`px-3 py-1 rounded-full transition-all ${
-                activeNav === 'intelligence-layers' ? 'text-cyan-300 bg-cyan-950/80 font-semibold shadow-sm' : 'hover:text-white'
+                activeNav === 'intelligence-layers' ? 'text-cyan-300 bg-cyan-950/70 font-semibold' : 'hover:text-white'
               }`}
             >
-              Monolith
+              Intelligence
             </a>
             <a
               href="#ask-data"
               className={`px-3 py-1 rounded-full transition-all ${
-                activeNav === 'ask-data' ? 'text-cyan-300 bg-cyan-950/80 font-semibold shadow-sm' : 'hover:text-white'
+                activeNav === 'ask-data' ? 'text-cyan-300 bg-cyan-950/70 font-semibold' : 'hover:text-white'
               }`}
             >
               Terminal
@@ -945,7 +780,7 @@ const LandingPage = () => {
             <a
               href="#launchpad"
               className={`px-3 py-1 rounded-full transition-all ${
-                activeNav === 'launchpad' ? 'text-cyan-300 bg-cyan-950/80 font-semibold shadow-sm' : 'hover:text-white'
+                activeNav === 'launchpad' ? 'text-cyan-300 bg-cyan-950/70 font-semibold' : 'hover:text-white'
               }`}
             >
               Launchpad
@@ -966,30 +801,32 @@ const LandingPage = () => {
       </header>
 
       {/* ===================================================================== */}
-      {/* 1. HERO — DATA UNIVERSE (3D PROJECTED DATA CORE & LIVING NODES)        */}
+      {/* 1. HERO — DATA UNIVERSE (IMMERSIVE FULL-SCREEN 3D DATA CORE)          */}
       {/* ===================================================================== */}
       <section
         id="hero"
         className="relative min-h-screen w-full flex flex-col justify-between pt-24 pb-12 px-4 sm:px-6 lg:px-8 overflow-hidden"
       >
-        {/* Real 3D Rotating Polytope & Stream Canvas */}
-        <Hero3DDataUniverse mouseOffset={mouseOffset} />
+        {/* Dynamic High-Performance Particle Canvas */}
+        <HeroCanvasUniverse mouseOffset={mouseOffset} />
 
-        {/* Ambient Volumetric Atmosphere */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-gradient-to-tr from-cyan-600/18 via-indigo-600/18 to-purple-600/12 rounded-full blur-[150px] pointer-events-none -z-10" />
+        {/* Ambient Radial Vignette & Atmospheric Glows */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-tr from-cyan-600/15 via-indigo-600/15 to-purple-600/10 rounded-full blur-[140px] pointer-events-none -z-10" />
+        <div className="absolute top-12 left-1/4 w-[350px] h-[350px] bg-blue-600/10 rounded-full blur-[120px] pointer-events-none -z-10" />
 
-        {/* Top Typography Stack */}
+        {/* Top/Side Typography: Balanced, Not taking up half the screen */}
         <div className="relative z-10 max-w-6xl mx-auto w-full pt-4 md:pt-6">
           <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
+            {/* Statement Header */}
             <div className="max-w-xl">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/40 bg-cyan-950/40 backdrop-blur-md mb-3">
-                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping" />
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/30 bg-cyan-950/30 backdrop-blur-md mb-3">
+                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
                 <span className="text-[10px] font-mono tracking-widest text-cyan-300 uppercase font-semibold">
                   AUTONOMOUS DATA INTELLIGENCE ENGINE
                 </span>
               </div>
 
-              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-[1.06]">
+              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-[1.08]">
                 YOUR DATA<br />
                 <span className="bg-gradient-to-r from-cyan-300 via-blue-400 to-indigo-300 bg-clip-text text-transparent">
                   HAS A STORY.
@@ -1004,10 +841,11 @@ const LandingPage = () => {
                 Explore patterns, relationships, anomalies and predictions hidden inside your data with mathematical rigor.
               </p>
 
+              {/* Action Buttons */}
               <div className="mt-5 flex flex-wrap items-center gap-3">
                 <button
                   onClick={() => navigate('/upload')}
-                  className="px-6 py-3 rounded-full text-xs sm:text-sm font-bold tracking-wide text-white bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 transition-all shadow-xl shadow-cyan-500/30 flex items-center gap-2.5 cursor-pointer group scale-100 hover:scale-105 active:scale-95"
+                  className="px-6 py-3 rounded-full text-xs sm:text-sm font-bold tracking-wide text-white bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 transition-all shadow-xl shadow-cyan-500/25 flex items-center gap-2.5 cursor-pointer group scale-100 hover:scale-105 active:scale-95"
                 >
                   <span>ENTER DATA LENS</span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -1023,51 +861,51 @@ const LandingPage = () => {
               </div>
             </div>
 
-            {/* Futuristic Live Engine Telemetry Readout */}
-            <div className="hidden lg:flex flex-col gap-2 p-3.5 rounded-2xl bg-[#040814]/80 border border-slate-800/80 backdrop-blur-xl max-w-xs font-mono text-[11px] text-slate-400 shadow-2xl relative">
-              <div className="flex items-center justify-between border-b border-slate-800/80 pb-1.5">
+            {/* Quick Engine Telemetry Readout Widget */}
+            <div className="hidden lg:flex flex-col gap-2 p-3.5 rounded-2xl bg-[#040814]/70 border border-slate-800/80 backdrop-blur-md max-w-xs font-mono text-[11px] text-slate-400 shadow-xl">
+              <div className="flex items-center justify-between border-b border-slate-800/60 pb-1.5">
                 <span className="text-cyan-400 font-bold flex items-center gap-1.5">
                   <Activity className="w-3.5 h-3.5 text-cyan-400" />
-                  CORE HUD MATRIX
+                  TELEMETRY MATRIX
                 </span>
-                <span className="text-emerald-400 text-[10px]">COHERENT</span>
+                <span className="text-emerald-400 text-[10px]">ACTIVE</span>
               </div>
               <div className="flex justify-between py-0.5">
-                <span>EIGENVALUE FLUX</span>
-                <span className="text-white font-semibold">λ₁ = 4.31 (DOMINANT)</span>
+                <span>INFERENCE LATENCY</span>
+                <span className="text-white font-semibold">1.4ms (TENSOR)</span>
               </div>
               <div className="flex justify-between py-0.5">
                 <span>ENTROPY PURGE</span>
                 <span className="text-cyan-300 font-semibold">99.8% FILTERED</span>
               </div>
               <div className="flex justify-between py-0.5">
-                <span>INFERENCE LATENCY</span>
-                <span className="text-indigo-300 font-semibold">&lt; 1.4ms (TENSOR)</span>
+                <span>COVARIANCE ENGINE</span>
+                <span className="text-indigo-300 font-semibold">PEARSON / SPEARMAN</span>
               </div>
-              <div className="text-[10px] text-slate-500 pt-1 border-t border-slate-800/80">
-                ZERO RECTANGULAR CARDS // 100% LIVING ENGINE
+              <div className="text-[10px] text-slate-500 pt-1 border-t border-slate-800/60">
+                ZERO RECTANGULAR CARDS // 100% MATHEMATICAL ENGINE
               </div>
             </div>
           </div>
         </div>
 
         {/* =================================================================== */}
-        {/* CENTER OF SCREEN: 3D HOLOGRAPHIC DATA CORE & ORBITING OBJECTS       */}
+        {/* CENTER OF SCREEN: 3D DATA CORE + FLOATING ORBIT OBJECTS             */}
         {/* =================================================================== */}
         <div className="relative z-20 my-auto py-8 flex items-center justify-center">
           <div
             className="relative w-[310px] sm:w-[440px] md:w-[560px] lg:w-[660px] h-[310px] sm:h-[440px] md:h-[560px] lg:h-[600px] flex items-center justify-center transition-transform duration-200 scale-95 sm:scale-100"
             style={{
-              transform: `perspective(1000px) rotateX(${mouseOffset.y * -8}deg) rotateY(${mouseOffset.x * 8}deg)`
+              transform: `perspective(1000px) rotateX(${mouseOffset.y * -6}deg) rotateY(${mouseOffset.x * 6}deg)`
             }}
           >
-            {/* Concentric Rotating Hologram Laser Arcs */}
-            <div className="absolute w-[96%] h-[96%] rounded-full border border-cyan-500/20 animate-spin pointer-events-none" style={{ animationDuration: '60s' }} />
-            <div className="absolute w-[82%] h-[82%] rounded-full border border-dashed border-indigo-500/25 animate-spin pointer-events-none" style={{ animationDuration: '45s', animationDirection: 'reverse' }} />
-            <div className="absolute w-[66%] h-[66%] rounded-full border border-purple-500/20 pointer-events-none" />
-            <div className="absolute w-[50%] h-[50%] rounded-full border border-cyan-400/30 animate-pulse pointer-events-none" />
+            {/* Concentric Gyroscopic Radar & Orbital Rings */}
+            <div className="absolute w-[94%] h-[94%] rounded-full border border-cyan-500/15 animate-spin pointer-events-none" style={{ animationDuration: '60s' }} />
+            <div className="absolute w-[80%] h-[80%] rounded-full border border-dashed border-indigo-500/20 animate-spin pointer-events-none" style={{ animationDuration: '45s', animationDirection: 'reverse' }} />
+            <div className="absolute w-[64%] h-[64%] rounded-full border border-purple-500/15 pointer-events-none" />
+            <div className="absolute w-[48%] h-[48%] rounded-full border border-cyan-400/25 animate-pulse pointer-events-none" />
 
-            {/* Connecting Laser SVG Beams between Core and Nodes */}
+            {/* Glowing Connecting SVG Vector Streams between Core and Orbit Nodes */}
             <svg className="absolute inset-0 w-full h-full pointer-events-none z-0">
               {orbitNodes.map((node) => {
                 const rad = (node.angle * Math.PI) / 180;
@@ -1085,16 +923,16 @@ const LandingPage = () => {
                       y1="50%"
                       x2={`${nx}%`}
                       y2={`${ny}%`}
-                      stroke={isHovered ? '#38bdf8' : 'rgba(56, 189, 248, 0.22)'}
-                      strokeWidth={isHovered ? 2.5 : 1}
+                      stroke={isHovered ? '#38bdf8' : 'rgba(56, 189, 248, 0.18)'}
+                      strokeWidth={isHovered ? 2 : 1}
                       strokeDasharray={isHovered ? 'none' : '4 4'}
                       className="transition-all duration-300"
                     />
 
-                    <circle r={isHovered ? 3.5 : 2} fill="#38bdf8" opacity={isHovered ? 1 : 0.7}>
+                    <circle r={isHovered ? 3 : 2} fill="#38bdf8" opacity={isHovered ? 1 : 0.6}>
                       <animateMotion
                         path={`M 50,50 L ${nx},${ny}`}
-                        dur={`${2.2 + (node.angle % 3)}s`}
+                        dur={`${2.5 + (node.angle % 3)}s`}
                         repeatCount="indefinite"
                       />
                     </circle>
@@ -1110,34 +948,34 @@ const LandingPage = () => {
               onClick={() => navigate('/upload')}
               className="relative z-30 group cursor-pointer flex flex-col items-center justify-center"
             >
-              {/* Radiant Volumetric Halo */}
-              <div className="absolute w-44 sm:w-56 h-44 sm:h-56 rounded-full bg-gradient-to-tr from-cyan-500/30 via-blue-600/35 to-purple-600/30 blur-2xl group-hover:blur-3xl transition-all duration-500 animate-pulse pointer-events-none" />
+              {/* Outer Volumetric Halo */}
+              <div className="absolute w-40 sm:w-52 h-40 sm:h-52 rounded-full bg-gradient-to-tr from-cyan-500/25 via-blue-600/30 to-purple-600/25 blur-2xl group-hover:blur-3xl transition-all duration-500 animate-pulse pointer-events-none" />
 
-              {/* Spherical High-Tech Core Container */}
-              <div className="relative w-34 sm:w-42 h-34 sm:h-42 rounded-full bg-gradient-to-br from-[#0a1532] via-[#040a1c] to-[#01040a] border-2 border-cyan-400/80 shadow-[0_0_60px_rgba(56,189,248,0.45)] flex flex-col items-center justify-center p-3 overflow-hidden group-hover:scale-105 transition-transform duration-300">
+              {/* Spherical Metallic Energy Core Container */}
+              <div className="relative w-32 sm:w-40 h-32 sm:h-40 rounded-full bg-gradient-to-br from-[#0c1836] via-[#050c1e] to-[#02050c] border-2 border-cyan-400/60 shadow-[0_0_50px_rgba(56,189,248,0.35)] flex flex-col items-center justify-center p-3 overflow-hidden group-hover:scale-105 transition-transform duration-300">
                 <div
-                  className="absolute inset-0 rounded-full bg-gradient-to-tr from-transparent via-cyan-400/15 to-transparent animate-spin"
-                  style={{ animationDuration: '6s' }}
+                  className="absolute inset-0 rounded-full bg-gradient-to-tr from-transparent via-cyan-500/10 to-transparent animate-spin"
+                  style={{ animationDuration: '8s' }}
                 />
 
                 <div className="relative z-10 flex flex-col items-center justify-center text-center leading-none select-none">
-                  <span className="text-[12px] sm:text-sm font-black tracking-[0.35em] text-cyan-300">
+                  <span className="text-[12px] sm:text-sm font-black tracking-[0.3em] text-cyan-300">
                     DATA
                   </span>
-                  <span className="text-xl sm:text-3xl font-black tracking-[0.25em] text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.7)] my-0.5">
+                  <span className="text-lg sm:text-2xl font-black tracking-[0.25em] text-white drop-shadow-[0_0_12px_rgba(255,255,255,0.6)] my-0.5">
                     LENS
                   </span>
-                  <span className="text-[10px] sm:text-xs font-mono font-bold tracking-[0.45em] text-indigo-400">
+                  <span className="text-[10px] sm:text-xs font-mono font-bold tracking-[0.4em] text-indigo-400">
                     AI
                   </span>
                 </div>
 
-                <div className="relative z-10 mt-1 flex items-center gap-1 text-[8px] font-mono text-cyan-400 bg-cyan-950/90 px-2 py-0.5 rounded-full border border-cyan-500/40">
+                <div className="relative z-10 mt-1 flex items-center gap-1 text-[8px] font-mono text-cyan-400 bg-cyan-950/80 px-2 py-0.5 rounded-full border border-cyan-500/30">
                   <span className="w-1 h-1 rounded-full bg-cyan-400 animate-ping" />
                   <span>CORE ACTIVE</span>
                 </div>
 
-                <div className="absolute inset-2 rounded-full border border-cyan-400/25 pointer-events-none" />
+                <div className="absolute inset-2 rounded-full border border-cyan-400/20 pointer-events-none" />
               </div>
 
               <div className="mt-2.5 text-center">
@@ -1148,7 +986,7 @@ const LandingPage = () => {
             </div>
 
             {/* =============================================================== */}
-            {/* 9 FLOATING HUD DATA OBJECTS                                     */}
+            {/* 9 FLOATING DATA OBJECTS (ORBITING ORGANICALLY)                  */}
             {/* =============================================================== */}
             {orbitNodes.map((node) => {
               const rad = (node.angle * Math.PI) / 180;
@@ -1175,34 +1013,28 @@ const LandingPage = () => {
                   onClick={() => setHoveredNode(isHovered ? null : node)}
                   className="cursor-pointer group"
                 >
-                  {/* Holographic Crystal HUD Node */}
                   <div
-                    className={`relative flex items-center gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl transition-all duration-300 backdrop-blur-2xl ${
+                    className={`relative flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full transition-all duration-300 backdrop-blur-xl ${
                       isHovered
-                        ? 'bg-cyan-950/95 border-2 border-cyan-400 shadow-[0_0_30px_rgba(56,189,248,0.6)] scale-110'
-                        : 'bg-[#030718]/90 border border-slate-700/80 hover:border-cyan-500/60 shadow-xl'
+                        ? 'bg-cyan-950/90 border border-cyan-400 shadow-[0_0_25px_rgba(56,189,248,0.5)] scale-110'
+                        : 'bg-[#040817]/85 border border-slate-700/80 hover:border-cyan-500/50 shadow-lg'
                     }`}
                   >
                     <IconComponent
-                      className={`w-3.5 h-3.5 transition-colors ${
+                      className={`w-3 sm:w-3.5 h-3 sm:h-3.5 transition-colors ${
                         isHovered ? 'text-cyan-300' : 'text-slate-400 group-hover:text-cyan-400'
                       }`}
                     />
-                    <div className="flex flex-col text-left">
-                      <span
-                        className={`text-[10px] sm:text-xs font-mono font-black tracking-wider transition-colors ${
-                          isHovered ? 'text-white' : 'text-slate-200 group-hover:text-white'
-                        }`}
-                      >
-                        {node.label}
-                      </span>
-                      <span className="text-[8px] font-mono text-slate-500 hidden sm:inline-block">
-                        {node.code}
-                      </span>
-                    </div>
+                    <span
+                      className={`text-[10px] sm:text-xs font-mono font-bold tracking-wider transition-colors ${
+                        isHovered ? 'text-white' : 'text-slate-300 group-hover:text-white'
+                      }`}
+                    >
+                      {node.label}
+                    </span>
 
                     <span
-                      className={`w-1.5 h-1.5 rounded-full ml-1 ${
+                      className={`w-1.5 h-1.5 rounded-full ${
                         node.type === 'INPUT'
                           ? 'bg-emerald-400'
                           : node.type === 'STRUCTURE'
@@ -1214,7 +1046,7 @@ const LandingPage = () => {
                     />
                   </div>
 
-                  {/* Holographic Projection Ray HUD */}
+                  {/* Interactive Micro Visualization HUD Tooltip */}
                   <AnimatePresence>
                     {isHovered && (
                       <motion.div
@@ -1222,7 +1054,7 @@ const LandingPage = () => {
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.9, y: 5 }}
                         transition={{ duration: 0.15 }}
-                        className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-56 sm:w-64 p-3.5 rounded-2xl bg-[#020614]/98 border border-cyan-500/50 shadow-2xl backdrop-blur-2xl text-left pointer-events-none z-50 font-mono text-[11px]"
+                        className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-52 sm:w-64 p-3 rounded-2xl bg-[#030714]/95 border border-cyan-500/40 shadow-2xl backdrop-blur-2xl text-left pointer-events-none z-50 font-mono text-[11px]"
                       >
                         <div className="flex items-center justify-between border-b border-slate-800 pb-1.5 mb-2">
                           <span className="font-bold text-white flex items-center gap-1.5">
@@ -1239,7 +1071,7 @@ const LandingPage = () => {
                         </p>
 
                         {node.hasPreview === 'patterns' && (
-                          <div className="p-2 rounded-lg bg-black/70 border border-slate-800">
+                          <div className="p-2 rounded-lg bg-black/60 border border-slate-800">
                             <div className="text-[9px] text-slate-400 flex justify-between mb-1">
                               <span>COVARIANCE SCATTER</span>
                               <span className="text-cyan-400 font-bold">r = +0.892</span>
@@ -1249,7 +1081,7 @@ const LandingPage = () => {
                                 [15, 38], [28, 32], [42, 28], [55, 20], [70, 18], [85, 12], [98, 8],
                                 [20, 42], [35, 26], [60, 24], [78, 14], [90, 15]
                               ].map(([px, py], idx) => (
-                                <circle key={idx} cx={`${px}%`} cy={py} r="2" fill="#c084fc" opacity="0.85" />
+                                <circle key={idx} cx={`${px}%`} cy={py} r="2" fill="#c084fc" opacity="0.8" />
                               ))}
                               <line x1="10%" y1="42" x2="95%" y2="8" stroke="#38bdf8" strokeWidth="1.5" strokeDasharray="2 2" />
                             </svg>
@@ -1257,7 +1089,7 @@ const LandingPage = () => {
                         )}
 
                         {node.hasPreview === 'insights' && (
-                          <div className="p-2 rounded-lg bg-black/70 border border-slate-800">
+                          <div className="p-2 rounded-lg bg-black/60 border border-slate-800">
                             <div className="text-[9px] text-amber-400 font-bold mb-1 flex items-center gap-1">
                               <Sparkles className="w-3 h-3 text-amber-400" />
                               DISCOVERED PATTERN
@@ -1269,7 +1101,7 @@ const LandingPage = () => {
                         )}
 
                         {node.hasPreview === 'ml' && (
-                          <div className="grid grid-cols-2 gap-1.5 p-2 rounded-lg bg-black/70 border border-slate-800 text-[10px]">
+                          <div className="grid grid-cols-2 gap-1.5 p-2 rounded-lg bg-black/60 border border-slate-800 text-[10px]">
                             <div>
                               <span className="text-slate-500 block text-[8px]">ACCURACY</span>
                               <span className="text-cyan-400 font-bold">96.8%</span>
@@ -1290,7 +1122,7 @@ const LandingPage = () => {
                         )}
 
                         {node.hasPreview === 'prediction' && (
-                          <div className="p-2 rounded-lg bg-black/70 border border-slate-800">
+                          <div className="p-2 rounded-lg bg-black/60 border border-slate-800">
                             <div className="text-[9px] text-slate-400 flex justify-between mb-1">
                               <span>AUTOREGRESSIVE FORECAST</span>
                               <span className="text-emerald-400 font-bold">+18.4%</span>
@@ -1341,14 +1173,14 @@ const LandingPage = () => {
       </section>
 
       {/* ===================================================================== */}
-      {/* 6. SECTION — FROM CHAOS TO CLARITY (4D ENTROPY COLLAPSE ENGINE)       */}
+      {/* 6. SECTION — FROM CHAOS TO CLARITY (SIGNATURE CINEMATIC VISUAL)       */}
       {/* ===================================================================== */}
       <section
         id="chaos-to-clarity"
         className="relative py-28 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto border-t border-slate-800/60"
       >
         <div className="text-center max-w-3xl mx-auto mb-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-indigo-500/40 bg-indigo-950/40 text-indigo-400 font-mono text-xs mb-3">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-indigo-500/30 bg-indigo-950/30 text-indigo-400 font-mono text-xs mb-3">
             <Activity className="w-3.5 h-3.5 text-indigo-400" />
             <span>TRANSFORMATION LIFECYCLE</span>
           </div>
@@ -1369,14 +1201,14 @@ const LandingPage = () => {
           </div>
         </div>
 
-        {/* Cinematic Canvas Frame */}
-        <div className="relative rounded-3xl bg-[#030612] border border-cyan-500/40 shadow-[0_0_60px_rgba(56,189,248,0.18)] overflow-hidden">
-          <div className="flex flex-wrap items-center justify-between gap-3 p-4 border-b border-slate-800/80 bg-[#050b1c]/90 font-mono text-xs text-slate-400">
+        {/* Cinematic Interactive Canvas Frame */}
+        <div className="relative rounded-3xl bg-[#030612] border border-cyan-500/30 shadow-[0_0_50px_rgba(56,189,248,0.12)] overflow-hidden">
+          <div className="flex flex-wrap items-center justify-between gap-3 p-4 border-b border-slate-800/80 bg-[#050b1c]/80 font-mono text-xs text-slate-400">
             <div className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
               <span className="text-white font-bold">ENTROPY DYNAMICS ENGINE</span>
               <span className="text-slate-600">|</span>
-              <span>N = 380 ACTIVE VECTORS</span>
+              <span>N = 320 ACTIVE VECTORS</span>
             </div>
 
             <div className="flex items-center gap-3">
@@ -1389,10 +1221,10 @@ const LandingPage = () => {
             </div>
           </div>
 
-          <div className="relative w-full h-[400px] sm:h-[480px] bg-gradient-to-b from-[#020510] via-[#030715] to-[#01030a]">
+          <div className="relative w-full h-[380px] sm:h-[460px] bg-gradient-to-b from-[#020510] via-[#030715] to-[#01030a]">
             <ChaosToClarityCanvas stage={chaosStage} entropyValue={entropyValue} />
 
-            <div className="absolute bottom-4 left-4 font-mono text-xs text-slate-400 bg-black/70 backdrop-blur-md px-3 py-1.5 rounded-xl border border-slate-800">
+            <div className="absolute bottom-4 left-4 font-mono text-xs text-slate-400 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-xl border border-slate-800">
               STATE:{' '}
               <strong className="text-cyan-300">
                 {entropyValue > 70
@@ -1406,7 +1238,7 @@ const LandingPage = () => {
             </div>
           </div>
 
-          <div className="p-5 border-t border-slate-800/80 bg-[#040816]/95 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="p-5 border-t border-slate-800/80 bg-[#040816]/90 flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 w-full md:w-auto">
               {[
                 { stage: 0, label: '01 CHAOS', desc: 'Raw Dispersal' },
@@ -1419,7 +1251,7 @@ const LandingPage = () => {
                   onClick={() => handleSelectChaosStage(btn.stage)}
                   className={`px-3 py-2 rounded-xl font-mono text-xs text-left transition-all cursor-pointer ${
                     chaosStage === btn.stage
-                      ? 'bg-cyan-500/20 border border-cyan-400 text-white shadow-lg shadow-cyan-500/20'
+                      ? 'bg-cyan-500/20 border border-cyan-400 text-white shadow-lg shadow-cyan-500/10'
                       : 'bg-slate-900/60 border border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'
                   }`}
                 >
@@ -1458,14 +1290,14 @@ const LandingPage = () => {
       </section>
 
       {/* ===================================================================== */}
-      {/* 7. SECTION — DATA DNA (BIOLOGICAL-QUANTUM DATASET ANATOMY)            */}
+      {/* 7. SECTION — DATA DNA (INTERACTIVE STRUCTURAL NETWORK)                */}
       {/* ===================================================================== */}
       <section
         id="data-dna"
         className="relative py-28 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto border-t border-slate-800/60"
       >
         <div className="text-center max-w-3xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/40 bg-cyan-950/40 text-cyan-400 font-mono text-xs mb-3">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/30 bg-cyan-950/30 text-cyan-400 font-mono text-xs mb-3">
             <Binary className="w-3.5 h-3.5 text-cyan-400" />
             <span>ORGANIC DATASET ANATOMY</span>
           </div>
@@ -1477,14 +1309,6 @@ const LandingPage = () => {
           <p className="mt-3 text-sm sm:text-base text-slate-400">
             Every dataset possesses an organic mathematical structure. Instead of isolated tables, DataLens constructs an interactive topological network representing its fundamental dimensions.
           </p>
-        </div>
-
-        {/* Live Animated DNA Double Helix Visualizer */}
-        <div className="w-full h-28 rounded-2xl bg-[#030718] border border-cyan-500/30 mb-8 overflow-hidden relative">
-          <DataDnaHelixCanvas activeNode={activeDnaNode} />
-          <div className="absolute top-2 left-4 text-[10px] font-mono text-slate-400">
-            HELICAL SEQUENCER // COVARIANCE STRAND ACTIVE
-          </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
@@ -1533,7 +1357,7 @@ const LandingPage = () => {
                   onClick={() => setActiveDnaNode(node.id)}
                   className={`p-4 rounded-2xl transition-all duration-300 cursor-pointer flex items-start justify-between gap-4 border ${
                     isActive
-                      ? 'bg-gradient-to-r from-[#06122c] to-[#04091a] border-cyan-400 shadow-[0_0_30px_rgba(56,189,248,0.25)] scale-[1.01]'
+                      ? 'bg-gradient-to-r from-[#06122c] to-[#04091a] border-cyan-400 shadow-[0_0_25px_rgba(56,189,248,0.2)]'
                       : 'bg-[#030612]/70 border-slate-800/80 hover:border-slate-700 hover:bg-[#050b1d]'
                   }`}
                 >
@@ -1692,16 +1516,16 @@ const LandingPage = () => {
       </section>
 
       {/* ===================================================================== */}
-      {/* 8. SECTION — INTELLIGENCE LAYERS (ISOMETRIC 3D MONOLITH)              */}
+      {/* 8. SECTION — INTELLIGENCE LAYERS (CONNECTED 3D ARCHITECTURAL STACK)  */}
       {/* ===================================================================== */}
       <section
         id="intelligence-layers"
         className="relative py-28 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto border-t border-slate-800/60"
       >
         <div className="text-center max-w-3xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-purple-500/40 bg-purple-950/40 text-purple-400 font-mono text-xs mb-3">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-purple-500/30 bg-purple-950/30 text-purple-400 font-mono text-xs mb-3">
             <Layers className="w-3.5 h-3.5 text-purple-400" />
-            <span>ISOMETRIC 3D MONOLITH</span>
+            <span>UNIFIED SYSTEM ARCHITECTURE</span>
           </div>
 
           <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight">
@@ -1714,8 +1538,7 @@ const LandingPage = () => {
         </div>
 
         <div className="relative flex flex-col gap-4 max-w-4xl mx-auto">
-          {/* Vertical Optical Pillars Piercing Through All Layers */}
-          <div className="absolute left-8 top-8 bottom-8 w-1 bg-gradient-to-b from-cyan-400 via-indigo-500 to-purple-500 -z-0 opacity-50 hidden sm:block" />
+          <div className="absolute left-8 top-8 bottom-8 w-1 bg-gradient-to-b from-cyan-400 via-indigo-500 to-purple-500 -z-0 opacity-40 hidden sm:block" />
 
           {[
             {
@@ -1769,7 +1592,7 @@ const LandingPage = () => {
                 className={`relative z-10 p-6 rounded-2xl border transition-all duration-300 cursor-pointer ${
                   isSelected
                     ? `${item.color} shadow-2xl scale-[1.02]`
-                    : 'bg-[#030614]/85 border-slate-800 hover:border-slate-700 hover:bg-[#040a1e]'
+                    : 'bg-[#030614]/80 border-slate-800 hover:border-slate-700 hover:bg-[#040a1e]'
                 }`}
               >
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -1790,7 +1613,7 @@ const LandingPage = () => {
                   </div>
 
                   <div className="flex flex-col md:items-end gap-1.5 font-mono text-xs">
-                    <span className="text-cyan-300 bg-cyan-950/80 px-2.5 py-1 rounded-full border border-cyan-800/80">
+                    <span className="text-cyan-300 bg-cyan-950/60 px-2.5 py-1 rounded-full border border-cyan-800/80">
                       {item.metrics}
                     </span>
                     <span className="text-[10px] text-slate-500">CLICK TO EXPAND TENSOR TELEMETRY</span>
@@ -1800,7 +1623,7 @@ const LandingPage = () => {
                 {isSelected && (
                   <div className="mt-4 pt-4 border-t border-slate-800/80 grid grid-cols-1 sm:grid-cols-3 gap-3 font-mono text-xs text-slate-300">
                     {item.features.map((feat, fIdx) => (
-                      <div key={fIdx} className="flex items-center gap-2 p-2 rounded-lg bg-black/50 border border-slate-800">
+                      <div key={fIdx} className="flex items-center gap-2 p-2 rounded-lg bg-black/40 border border-slate-800">
                         <CheckCircle2 className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
                         <span className="text-[11px] font-sans">{feat}</span>
                       </div>
@@ -1814,14 +1637,14 @@ const LandingPage = () => {
       </section>
 
       {/* ===================================================================== */}
-      {/* 9. SECTION — ASK YOUR DATA (HOLOGRAPHIC AI QUERY TERMINAL)            */}
+      {/* 9. SECTION — ASK YOUR DATA (FUTURISTIC AI TELEMETRY TERMINAL)         */}
       {/* ===================================================================== */}
       <section
         id="ask-data"
         className="relative py-28 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto border-t border-slate-800/60"
       >
         <div className="text-center max-w-3xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/40 bg-cyan-950/40 text-cyan-400 font-mono text-xs mb-3">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/30 bg-cyan-950/30 text-cyan-400 font-mono text-xs mb-3">
             <Terminal className="w-3.5 h-3.5 text-cyan-400" />
             <span>NATURAL LANGUAGE QUERY INTERFACE</span>
           </div>
@@ -1835,8 +1658,7 @@ const LandingPage = () => {
           </p>
         </div>
 
-        <div className="max-w-4xl mx-auto rounded-3xl bg-[#020512] border border-cyan-500/40 shadow-[0_0_60px_rgba(56,189,248,0.2)] overflow-hidden">
-          {/* Audio Spectral Waveform Header */}
+        <div className="max-w-4xl mx-auto rounded-3xl bg-[#020512] border border-cyan-500/40 shadow-[0_0_60px_rgba(56,189,248,0.15)] overflow-hidden">
           <div className="p-4 bg-[#050b1c] border-b border-slate-800 flex items-center justify-between font-mono text-xs">
             <div className="flex items-center gap-2">
               <div className="flex gap-1.5">
@@ -1847,14 +1669,9 @@ const LandingPage = () => {
               <span className="ml-2 text-slate-400 font-semibold">datalens_terminal // query_engine.py</span>
             </div>
 
-            <div className="flex items-center gap-1.5">
-              {[4, 12, 8, 16, 6, 14, 10, 18, 5, 12].map((h, i) => (
-                <div key={i} className="w-1 bg-cyan-400 rounded-full animate-pulse" style={{ height: `${h}px` }} />
-              ))}
-              <span className="text-cyan-400 text-[10px] bg-cyan-950 px-2 py-0.5 rounded border border-cyan-800 ml-2">
-                SPECTRAL VOICE
-              </span>
-            </div>
+            <span className="text-cyan-400 text-[10px] bg-cyan-950 px-2 py-0.5 rounded border border-cyan-800">
+              DEMO PREVIEW // LIVE ORACLE
+            </span>
           </div>
 
           <div className="p-3 bg-[#030718] border-b border-slate-800/80 flex flex-wrap gap-2">
@@ -1921,16 +1738,16 @@ const LandingPage = () => {
       </section>
 
       {/* ===================================================================== */}
-      {/* 10. SECTION — LET THE DATA LEARN (SYNAPTIC NEURAL PIPELINE)           */}
+      {/* 10. SECTION — LET THE DATA LEARN (MACHINE LEARNING PIPELINE)          */}
       {/* ===================================================================== */}
       <section
         id="ml-learn"
         className="relative py-28 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto border-t border-slate-800/60"
       >
         <div className="text-center max-w-3xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/40 bg-cyan-950/40 text-cyan-400 font-mono text-xs mb-3">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/30 bg-cyan-950/30 text-cyan-400 font-mono text-xs mb-3">
             <Cpu className="w-3.5 h-3.5 text-cyan-400" />
-            <span>SYNAPTIC NEURAL PIPELINE</span>
+            <span>AUTONOMOUS MODEL TOURNAMENT</span>
           </div>
 
           <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight">
@@ -1949,7 +1766,7 @@ const LandingPage = () => {
               onClick={() => setActiveModel(key)}
               className={`px-4 py-2 rounded-full transition-all cursor-pointer ${
                 activeModel === key
-                  ? 'bg-cyan-500 text-black font-bold shadow-lg shadow-cyan-500/25'
+                  ? 'bg-cyan-500 text-black font-bold shadow-lg shadow-cyan-500/20'
                   : 'bg-slate-900/60 text-slate-400 border border-slate-800 hover:text-white'
               }`}
             >
@@ -1958,7 +1775,6 @@ const LandingPage = () => {
           ))}
         </div>
 
-        {/* Synaptic Flow Pipeline Bus */}
         <div className="p-8 rounded-3xl bg-[#030718] border border-cyan-500/30 shadow-2xl">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 relative">
             <div className="p-5 rounded-2xl bg-black/60 border border-slate-800 flex flex-col justify-between">
@@ -2014,27 +1830,22 @@ const LandingPage = () => {
             </div>
           </div>
 
-          {/* Integrated Circular Neon HUD Gauges */}
           <div className="mt-8 pt-6 border-t border-slate-800/80 grid grid-cols-2 sm:grid-cols-4 gap-4 font-mono text-center">
-            <div className="p-4 rounded-xl bg-slate-900/50 border border-slate-800 flex flex-col items-center">
+            <div className="p-4 rounded-xl bg-slate-900/40 border border-slate-800">
               <span className="text-slate-400 text-xs block mb-1">ACCURACY</span>
               <span className="text-2xl font-black text-cyan-300">{mlModels[activeModel].accuracy}</span>
-              <span className="text-[9px] text-slate-500 mt-1">CROSS-VALIDATED</span>
             </div>
-            <div className="p-4 rounded-xl bg-slate-900/50 border border-slate-800 flex flex-col items-center">
+            <div className="p-4 rounded-xl bg-slate-900/40 border border-slate-800">
               <span className="text-slate-400 text-xs block mb-1">F1 SCORE</span>
               <span className="text-2xl font-black text-indigo-300">{mlModels[activeModel].f1}</span>
-              <span className="text-[9px] text-slate-500 mt-1">HARMONIC MEAN</span>
             </div>
-            <div className="p-4 rounded-xl bg-slate-900/50 border border-slate-800 flex flex-col items-center">
+            <div className="p-4 rounded-xl bg-slate-900/40 border border-slate-800">
               <span className="text-slate-400 text-xs block mb-1">R² SCORE</span>
               <span className="text-2xl font-black text-purple-300">{mlModels[activeModel].r2}</span>
-              <span className="text-[9px] text-slate-500 mt-1">EXPLAINED VAR</span>
             </div>
-            <div className="p-4 rounded-xl bg-slate-900/50 border border-slate-800 flex flex-col items-center">
+            <div className="p-4 rounded-xl bg-slate-900/40 border border-slate-800">
               <span className="text-slate-400 text-xs block mb-1">RMSE ERROR</span>
               <span className="text-2xl font-black text-emerald-300">{mlModels[activeModel].rmse}</span>
-              <span className="text-[9px] text-slate-500 mt-1">NORM RESIDUAL</span>
             </div>
           </div>
         </div>
@@ -2047,9 +1858,9 @@ const LandingPage = () => {
         id="launchpad"
         className="relative py-28 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto border-t border-slate-800/60 text-center"
       >
-        <div className="relative mx-auto mb-8 w-28 h-28 rounded-full bg-gradient-to-br from-[#0c1836] via-[#050c1e] to-[#02050c] border-2 border-cyan-400/80 shadow-[0_0_60px_rgba(56,189,248,0.45)] flex items-center justify-center">
+        <div className="relative mx-auto mb-8 w-28 h-28 rounded-full bg-gradient-to-br from-[#0c1836] via-[#050c1e] to-[#02050c] border-2 border-cyan-400/60 shadow-[0_0_50px_rgba(56,189,248,0.35)] flex items-center justify-center">
           <BrainCircuit className="w-12 h-12 text-cyan-400 animate-pulse" />
-          <div className="absolute -inset-2 rounded-full border border-dashed border-indigo-500/40 animate-spin" style={{ animationDuration: '30s' }} />
+          <div className="absolute -inset-2 rounded-full border border-dashed border-indigo-500/30 animate-spin" style={{ animationDuration: '30s' }} />
         </div>
 
         <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight max-w-3xl mx-auto">
@@ -2067,14 +1878,14 @@ const LandingPage = () => {
         <div className="mt-8 flex justify-center">
           <button
             onClick={() => navigate('/upload')}
-            className="px-8 py-4 rounded-full text-sm font-bold text-white bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 transition-all shadow-2xl shadow-cyan-500/35 cursor-pointer flex items-center gap-3 group scale-105 hover:scale-110 active:scale-95"
+            className="px-8 py-4 rounded-full text-sm font-bold text-white bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 transition-all shadow-2xl shadow-cyan-500/30 cursor-pointer flex items-center gap-3 group scale-105 hover:scale-110 active:scale-95"
           >
             <span>ENTER DATA LENS</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />
           </button>
         </div>
 
-        {/* 1-Click Postgraduate Sample Benchmarks */}
+        {/* Curated Benchmark Datasets with live context fallback */}
         <div className="mt-16 text-left">
           <div className="flex items-center gap-2 mb-4 text-xs font-mono text-slate-400">
             <Database className="w-3.5 h-3.5 text-cyan-400" />
@@ -2085,7 +1896,7 @@ const LandingPage = () => {
             {displaySamples.map((sample) => (
               <div
                 key={sample.id}
-                className="bg-[#050b1c]/85 rounded-2xl border border-slate-800 hover:border-cyan-500/50 p-4 shadow-xl hover:shadow-cyan-500/20 transition-all flex flex-col justify-between group backdrop-blur-xl"
+                className="bg-[#050b1c]/80 rounded-2xl border border-slate-800 hover:border-cyan-500/40 p-4 shadow-lg hover:shadow-cyan-500/10 transition-all flex flex-col justify-between group backdrop-blur-md"
               >
                 <div>
                   <div className="flex items-center justify-between mb-2">
@@ -2127,9 +1938,9 @@ const LandingPage = () => {
         {/* Custom Dataset Upload Dropzone */}
         <div
           onClick={() => navigate('/upload')}
-          className="mt-10 max-w-xl mx-auto rounded-2xl border border-dashed border-slate-800 hover:border-cyan-500/60 bg-[#040814]/80 hover:bg-[#060c1e] p-6 text-center transition-all cursor-pointer group"
+          className="mt-10 max-w-xl mx-auto rounded-2xl border border-dashed border-slate-800 hover:border-cyan-500/50 bg-[#040814]/80 hover:bg-[#060c1e] p-6 text-center transition-all cursor-pointer group"
         >
-          <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform">
+          <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform">
             <Upload className="w-5 h-5" />
           </div>
           <h4 className="text-sm font-bold text-white mb-0.5">Analyze Your Own Dataset</h4>
@@ -2142,7 +1953,7 @@ const LandingPage = () => {
       {/* ===================================================================== */}
       <AnimatePresence>
         {isExperienceModalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-2xl">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-xl">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
