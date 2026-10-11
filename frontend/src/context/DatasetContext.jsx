@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { SAMPLE_DATASETS_META } from '../services/dataEngine';
 import {
   getDatasetProfile,
   getDatasetQuality,
@@ -8,7 +9,6 @@ import {
   getDatasetOutliers,
   checkMLSuitability,
   runAutoML,
-  predictWhatIf,
   runForecasting,
   loadSampleDataset,
   uploadDatasetFile,
@@ -37,7 +37,7 @@ export const DatasetProvider = ({ children }) => {
   const [automlResult, setAutomlResult] = useState(null);
   const [forecastingData, setForecastingData] = useState(null);
 
-  const [samplesList, setSamplesList] = useState([]);
+  const [samplesList, setSamplesList] = useState(SAMPLE_DATASETS_META);
   const [loading, setLoading] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState('');
   const [error, setError] = useState(null);
@@ -49,19 +49,9 @@ export const DatasetProvider = ({ children }) => {
 
   useEffect(() => {
     getSampleDatasets()
-      .then((data) => setSamplesList(data))
+      .then((data) => { if (Array.isArray(data) && data.length > 0) setSamplesList(data); })
       .catch((err) => console.error('Could not load samples list:', err));
   }, []);
-
-  useEffect(() => {
-    if (currentDataset?.dataset_id) {
-      localStorage.setItem('datalens_current_dataset', JSON.stringify(currentDataset));
-      fetchAllAnalytics(currentDataset.dataset_id);
-    } else {
-      localStorage.removeItem('datalens_current_dataset');
-      resetAllData();
-    }
-  }, [currentDataset?.dataset_id]);
 
   const resetAllData = () => {
     setProfileData(null);
@@ -116,6 +106,16 @@ export const DatasetProvider = ({ children }) => {
       setLoadingMessage('');
     }
   };
+
+  useEffect(() => {
+    if (currentDataset?.dataset_id) {
+      localStorage.setItem('datalens_current_dataset', JSON.stringify(currentDataset));
+      fetchAllAnalytics(currentDataset.dataset_id);
+    } else {
+      localStorage.removeItem('datalens_current_dataset');
+      resetAllData();
+    }
+  }, [currentDataset?.dataset_id]);
 
   const uploadFile = async (file, onProgress) => {
     setLoading(true);

@@ -13,13 +13,9 @@ import {
   Network,
   CheckCircle2,
   Cpu,
-  Zap,
-  Sliders,
   X,
-  ChevronRight,
   SlidersHorizontal,
   TrendingUp,
-  BarChart3,
   TableProperties,
   Terminal,
   FileSpreadsheet,
@@ -27,7 +23,6 @@ import {
   Eye,
   Sparkles,
   GitBranch,
-  ShieldCheck,
   Binary
 } from 'lucide-react';
 import { useDataset } from '../context/DatasetContext';

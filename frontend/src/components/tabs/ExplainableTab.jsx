@@ -1,5 +1,5 @@
 import React from 'react';
-import { Cpu, HelpCircle, Activity } from 'lucide-react';
+import { Cpu } from 'lucide-react';
 
 const ExplainableTab = ({ explainability }) => {
   if (!explainability) {

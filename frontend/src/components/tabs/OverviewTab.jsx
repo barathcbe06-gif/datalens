@@ -1,5 +1,5 @@
 import React from 'react';
-import { Database, FileText, Layers, Hash, CheckCircle2 } from 'lucide-react';
+import { Database, Layers } from 'lucide-react';
 import StatCard from '../ui/StatCard';
 import DataTable from '../ui/DataTable';
 

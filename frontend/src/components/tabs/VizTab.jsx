@@ -53,7 +53,7 @@ const VizTab = ({ vizData, datasetId }) => {
     <div className="space-y-4 sm:space-y-6 w-full min-w-0">
       {/* Distribution Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
-        {vizData.distribution_charts.map((c) => (
+        {(vizData.distribution_charts || vizData.charts || []).map((c) => (
           <div key={c.column} className="bg-slate-900/60 rounded-2xl border border-slate-800 p-4 sm:p-5 shadow-lg backdrop-blur-md space-y-3 min-w-0">
             <div className="flex justify-between items-start gap-2">
               <div className="min-w-0 flex-1">
@@ -100,9 +100,9 @@ const VizTab = ({ vizData, datasetId }) => {
       </div>
 
       {/* Scatter Plots */}
-      {vizData.scatter_charts.length > 0 && (
+      {(vizData.scatter_charts || []).length > 0 && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
-          {vizData.scatter_charts.map((sc) => (
+          {(vizData.scatter_charts || []).map((sc) => (
             <div key={sc.id} className="bg-slate-900/60 rounded-2xl border border-slate-800 p-4 sm:p-5 shadow-lg backdrop-blur-md space-y-3 min-w-0">
               <div className="flex justify-between items-start gap-2">
                 <div className="min-w-0 flex-1">

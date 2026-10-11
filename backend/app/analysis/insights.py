@@ -156,4 +156,16 @@ def generate_ai_insights(file_path: Path) -> List[Dict[str, Any]]:
         except Exception:
             pass
 
+        # Ensure contract compatibility with frontend schema
+    for item in insights:
+        if "description" not in item and "text" in item:
+            item["description"] = item["text"]
+        if "category" not in item and "badge" in item:
+            item["category"] = item["badge"]
+        if "metric" not in item and "evidence" in item:
+            ev = item["evidence"]
+            item["metric"] = " • ".join(f"{k}: {v}" for k, v in list(ev.items())[:2])
+        if "actionable" not in item:
+            item["actionable"] = item.get("type") in ["warning", "missing", "correlation"]
+
     return insights

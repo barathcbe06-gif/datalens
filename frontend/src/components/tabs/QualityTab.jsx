@@ -3,6 +3,9 @@ import QualityGauge from '../ui/QualityGauge';
 
 const QualityTab = ({ qualityData }) => {
   if (!qualityData) return null;
+  const issues = qualityData.issues || [];
+  const recommendations = qualityData.recommendations || [];
+  const breakdown = qualityData.breakdown || {};
 
   return (
     <div className="space-y-4 sm:space-y-6 w-full min-w-0">
@@ -26,7 +29,7 @@ const QualityTab = ({ qualityData }) => {
           </h3>
 
           <div className="space-y-3 sm:space-y-4 pt-1">
-            {Object.entries(qualityData.breakdown).map(([key, item]) => (
+            {Object.entries(breakdown).map(([key, item]) => (
               <div key={key} className="space-y-1 sm:space-y-1.5 font-mono">
                 <div className="flex justify-between text-xs">
                   <span className="capitalize text-slate-300 font-semibold">{key}</span>
@@ -50,17 +53,17 @@ const QualityTab = ({ qualityData }) => {
         {/* Identified Issues */}
         <div className="bg-slate-900/60 rounded-2xl border border-slate-800 p-4 sm:p-6 backdrop-blur-md space-y-3 sm:space-y-4 shadow-lg">
           <h3 className="text-sm font-bold text-white font-mono flex items-center justify-between">
-            <span>Detected Data Hygiene Anomalies ({qualityData.issues.length})</span>
+            <span>Detected Data Hygiene Anomalies ({issues.length})</span>
             <span className="text-[10px] bg-slate-800 text-slate-400 px-2 py-0.5 rounded font-mono">Audit Log</span>
           </h3>
 
-          {qualityData.issues.length === 0 ? (
+          {issues.length === 0 ? (
             <div className="p-6 text-center text-emerald-400 font-mono text-xs">
               Zero data hygiene anomalies identified. Flawless data fidelity!
             </div>
           ) : (
             <div className="space-y-2.5 max-h-[380px] overflow-y-auto pr-1 touch-scroll">
-              {qualityData.issues.map((iss, i) => (
+              {issues.map((iss, i) => (
                 <div key={i} className="p-3 sm:p-3.5 rounded-xl bg-slate-950/60 border border-slate-800 text-xs space-y-1 font-mono">
                   <div className="flex items-center justify-between gap-2">
                     <span className="font-bold text-white truncate">{iss.title}</span>
@@ -88,7 +91,7 @@ const QualityTab = ({ qualityData }) => {
             Systematic Cleaning & Preprocessing Guidance
           </h3>
           <div className="space-y-2.5 font-mono">
-            {qualityData.recommendations.map((rec, i) => (
+            {recommendations.map((rec, i) => (
               <div key={i} className="p-3 sm:p-3.5 rounded-xl bg-slate-950/60 border border-slate-800/80 text-xs flex items-start gap-2.5">
                 <span className="text-cyan-400 font-bold shrink-0 mt-0.5">#{i + 1}</span>
                 <span className="text-slate-300 leading-relaxed">{rec}</span>

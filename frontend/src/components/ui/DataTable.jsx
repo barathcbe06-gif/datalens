@@ -6,9 +6,6 @@ import {
   ArrowUp,
   ArrowDown,
   Search,
-  Filter,
-  CheckCircle2,
-  TableProperties
 } from 'lucide-react';
 
 const DataTable = ({ columns = [], data = [], initialPageSize = 10 }) => {

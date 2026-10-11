@@ -1,17 +1,21 @@
 import React from 'react';
-import { AlertTriangle, ShieldCheck } from 'lucide-react';
+import { AlertTriangle } from 'lucide-react';
 import StatCard from '../ui/StatCard';
 
 const OutliersTab = ({ outliersData }) => {
   if (!outliersData) return null;
+  const colsWithOutliers = outliersData.columns_with_outliers || outliersData.column_breakdown || [];
+  const totalOutliers = outliersData.total_outliers ?? outliersData.outlier_count ?? 0;
+  const outlierPercentage = outliersData.outlier_percentage ?? 0;
+  const cleanRecords = outliersData.clean_records ?? (outliersData.total_records ? outliersData.total_records - totalOutliers : 0);
 
   return (
     <div className="space-y-4 sm:space-y-6 font-mono w-full min-w-0">
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-4">
-        <StatCard title="Total Outliers" value={outliersData.total_outliers} subtitle="Anomalous records" color="rose" />
-        <StatCard title="Outlier Ratio" value={`${outliersData.outlier_percentage}%`} subtitle="Of dataset rows" color="amber" />
-        <StatCard title="Features With Outliers" value={outliersData.columns_with_outliers.length} subtitle="Contaminated cols" color="violet" />
-        <StatCard title="Clean Records" value={outliersData.clean_records?.toLocaleString()} subtitle="Within normal bounds" color="emerald" />
+        <StatCard title="Total Outliers" value={totalOutliers} subtitle="Anomalous records" color="rose" />
+        <StatCard title="Outlier Ratio" value={`${outlierPercentage}%`} subtitle="Of dataset rows" color="amber" />
+        <StatCard title="Features With Outliers" value={colsWithOutliers.length} subtitle="Contaminated cols" color="violet" />
+        <StatCard title="Clean Records" value={cleanRecords?.toLocaleString()} subtitle="Within normal bounds" color="emerald" />
       </div>
 
       <div className="bg-slate-900/60 rounded-2xl border border-slate-800 p-4 sm:p-5 shadow-lg backdrop-blur-md space-y-3">
@@ -35,15 +39,27 @@ const OutliersTab = ({ outliersData }) => {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-800/60">
-              {outliersData.columns_with_outliers.map((d) => (
-                <tr key={d.column} className="hover:bg-slate-800/30">
-                  <td className="p-2.5 sm:p-3 font-bold text-white whitespace-nowrap">{d.column}</td>
-                  <td className="p-2.5 sm:p-3 text-rose-400 font-bold whitespace-nowrap">{d.count} ({d.percentage}%)</td>
-                  <td className="p-2.5 sm:p-3 text-slate-400 whitespace-nowrap">{d.lower_bound}</td>
-                  <td className="p-2.5 sm:p-3 text-slate-400 whitespace-nowrap">{d.upper_bound}</td>
-                  <td className="p-2.5 sm:p-3 text-cyan-300 text-[11px] truncate max-w-[200px]">{d.sample_values?.join(', ')}</td>
+              {colsWithOutliers.length === 0 ? (
+                <tr>
+                  <td colSpan="5" className="p-4 text-center text-slate-400">
+                    Zero statistical outliers detected beyond 1.5× IQR whiskers.
+                  </td>
                 </tr>
-              ))}
+              ) : (
+                colsWithOutliers.map((d) => (
+                  <tr key={d.column} className="hover:bg-slate-800/30">
+                    <td className="p-2.5 sm:p-3 font-bold text-white whitespace-nowrap">{d.column}</td>
+                    <td className="p-2.5 sm:p-3 text-rose-400 font-bold whitespace-nowrap">
+                      {d.outlier_count ?? d.count ?? 0} ({d.percentage ?? 0}%)
+                    </td>
+                    <td className="p-2.5 sm:p-3 text-slate-400 whitespace-nowrap">{d.lower_bound}</td>
+                    <td className="p-2.5 sm:p-3 text-slate-400 whitespace-nowrap">{d.upper_bound}</td>
+                    <td className="p-2.5 sm:p-3 text-cyan-300 text-[11px] truncate max-w-[200px]">
+                      {Array.isArray(d.sample_values) ? d.sample_values.join(', ') : 'Boundary violations'}
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>

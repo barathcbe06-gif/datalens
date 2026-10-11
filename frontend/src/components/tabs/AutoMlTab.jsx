@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrainCircuit, Trophy, Sliders, CheckCircle2, Sparkles, Cpu, Activity } from 'lucide-react';
+import { BrainCircuit, Trophy, Sliders, Sparkles } from 'lucide-react';
 import { predictWhatIf } from '../../services/api';
 
 const AutoMlTab = ({ mlEligibility, automlResult, onRunAutoML, loading }) => {

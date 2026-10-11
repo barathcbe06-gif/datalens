@@ -9,7 +9,7 @@ import {
   CartesianGrid,
   Legend
 } from 'recharts';
-import { TrendingUp, Sparkles, Calendar } from 'lucide-react';
+import { TrendingUp } from 'lucide-react';
 import StatCard from '../ui/StatCard';
 
 const ForecastingTab = ({ forecastingData, onRunForecast, loadSample }) => {
@@ -83,8 +83,8 @@ const ForecastingTab = ({ forecastingData, onRunForecast, loadSample }) => {
           <ResponsiveContainer width="100%" height="100%">
             <LineChart
               data={[
-                ...forecastingData.historical_data.map((d) => ({ date: d.date, actual: d.actual, moving_average: d.moving_average })),
-                ...forecastingData.forecast_data.map((d) => ({ date: d.date, forecast: d.forecast, lower_bound: d.lower_bound, upper_bound: d.upper_bound }))
+                ...(forecastingData.historical_data || forecastingData.historical_points || []).map((d) => ({ date: d.date, actual: d.actual ?? d.value, moving_average: d.moving_average ?? d.value })),
+                ...(forecastingData.forecast_data || forecastingData.forecast_points || []).map((d) => ({ date: d.date, forecast: d.forecast, lower_bound: d.lower_bound, upper_bound: d.upper_bound }))
               ]}
               margin={{ top: 10, right: 10, left: -10, bottom: 20 }}
             >

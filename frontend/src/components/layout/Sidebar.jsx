@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, Link, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard,
   ShieldCheck,
@@ -15,8 +15,7 @@ import {
   Lightbulb,
   Cpu,
   X,
-  FileSpreadsheet,
-  PlusCircle
+  FileSpreadsheet
 } from 'lucide-react';
 import { useDataset } from '../../context/DatasetContext';
 
